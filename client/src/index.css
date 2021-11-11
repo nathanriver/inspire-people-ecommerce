@@ -1,0 +1,69 @@
+/* ./src/index.css */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  [type="text"],
+  [type="email"],
+  [type="url"],
+  [type="password"],
+  [type="number"],
+  [type="date"],
+  [type="datetime-local"],
+  [type="month"],
+  [type="search"],
+  [type="tel"],
+  [type="time"],
+  [type="week"],
+  [multiple],
+  textarea,
+  select {
+    @apply rounded border-gray-400 focus:border-black focus:ring-black hover:border-black;
+  }
+}
+
+.sidebar {
+  @apply bg-black text-white w-2/5 h-screen fixed z-40 top-0 -left-full duration-700;
+}
+
+.sidebar.active {
+  @apply left-0 duration-700;
+}
+
+.sidebar-item {
+  @apply block py-3 px-2 text-sm font-medium;
+}
+
+.slick-dots {
+  bottom: 1rem !important;
+}
+
+.content {
+  min-height: calc(100vh - 64px - 64px);
+}
+
+.label {
+  @apply text-sm font-medium block mb-1;
+}
+
+.btn {
+  @apply border border-transparent bg-black text-white py-1.5 px-3 rounded shadow text-sm font-medium;
+}
+
+.btn-secondary {
+  @apply border border-black py-1.5 px-3 rounded text-sm font-medium hover:bg-gray-100 active:bg-gray-200;
+}
+
+.btn-outline {
+  @apply border border-gray-400 rounded hover:bg-gray-100 active:bg-gray-200;
+}
+
+.card {
+  @apply border border-gray-400 rounded py-2 px-4;
+}
+
+.card-border-b {
+  @apply border-b border-gray-400 py-2 px-4;
+}
