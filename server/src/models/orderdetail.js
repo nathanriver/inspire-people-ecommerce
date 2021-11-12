@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       });
       this.belongsTo(Order, {
         foreignKey: "order_id",
-        as: "productDetail",
+        as: "order",
       });
     }
   }

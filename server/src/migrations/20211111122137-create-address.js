@@ -8,6 +8,11 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
       },
+      uuid: {
+        type: DataTypes.UUID,
+        allowNull: false,
+        defaultValue: DataTypes.UUIDV4,
+      },
       user_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -32,8 +37,16 @@ module.exports = {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
+      province_name: {
+        type: DataTypes.STRING(150),
+        allowNull: false,
+      },
       city_id: {
         type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      city_name: {
+        type: DataTypes.STRING(150),
         allowNull: false,
       },
       subdistrict: {
