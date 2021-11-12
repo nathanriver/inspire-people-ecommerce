@@ -1,10 +1,10 @@
-import ImageSlider from "../components/ImageSlider";
+import Banner from "../components/Banner";
 import ProductList from "../components/ProductList";
 
 const Home = () => {
   return (
     <>
-      <ImageSlider />
+      <Banner />
       <ProductList />
     </>
   );

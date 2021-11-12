@@ -6,7 +6,7 @@ import tshirt3 from "./assets/images/products/tshirt-3.png";
 import tshirt4 from "./assets/images/products/tshirt-4.png";
 import tshirt5 from "./assets/images/products/tshirt-5.png";
 
-export const coverList = [cover1, cover2];
+export const banners = [cover1, cover2];
 
 export const productList = [
   {

@@ -3,7 +3,7 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert(
-      "sliderimages",
+      "banners",
       [
         {
           image_url:
@@ -21,6 +21,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete("sliderimages", null, {});
+    await queryInterface.bulkDelete("banners", null, {});
   },
 };

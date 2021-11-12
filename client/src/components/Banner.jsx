@@ -1,9 +1,9 @@
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { coverList } from "../data";
+import { banners } from "../data";
 
-const ImageSlider = () => {
+const Banner = () => {
   var settings = {
     dots: true,
     infinite: true,
@@ -16,10 +16,10 @@ const ImageSlider = () => {
   return (
     <div className="mb-4">
       <Slider {...settings}>
-        {coverList.map((cover, i) => {
+        {banners.map((banner, i) => {
           return (
             <div>
-              <img key={i} src={cover} alt={cover} />
+              <img key={i} src={banner} alt={banner} />
             </div>
           );
         })}
@@ -28,4 +28,4 @@ const ImageSlider = () => {
   );
 };
 
-export default ImageSlider;
+export default Banner;
