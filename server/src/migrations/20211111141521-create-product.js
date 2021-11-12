@@ -18,7 +18,6 @@ module.exports = {
       },
       sku: {
         type: DataTypes.STRING(16),
-        allowNull: false,
       },
       slug: {
         type: DataTypes.STRING(255),

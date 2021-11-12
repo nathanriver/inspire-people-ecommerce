@@ -20,8 +20,13 @@
   "scripts": {
     "start": "nodemon src/index",
     "migrate": "sequelize db:migrate",
+    "migrate-fresh": "sequelize db:migrate:undo:all && sequelize db:migrate",
+    "migrate-fresh-seed": "sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all",
     "down": "sequelize db:migrate:undo",
-    "down-all": "sequelize db:migrate:undo:all"
+    "down-all": "sequelize db:migrate:undo:all",
+    "make-seed": "sequelize seed:generate --name slider-image",
+    "seed": "sequelize db:seed:all",
+    "seed-undo-all": "sequelize db:seed:undo:all"
   },
   "author": "",
   "license": "ISC"
