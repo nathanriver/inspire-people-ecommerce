@@ -15,6 +15,16 @@ module.exports = {
           order_id: 1,
           quantity: 1,
         },
+        {
+          productdetail_id: 7,
+          order_id: 2,
+          quantity: 1,
+        },
+        {
+          productdetail_id: 8,
+          order_id: 3,
+          quantity: 1,
+        },
       ],
       {}
     );

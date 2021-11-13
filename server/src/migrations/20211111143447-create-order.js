@@ -8,6 +8,10 @@ module.exports = {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
+      order_number: {
+        type: DataTypes.STRING(14),
+        allowNull: false,
+      },
       paymentmethod_id: {
         type: DataTypes.INTEGER,
         allowNull: false,

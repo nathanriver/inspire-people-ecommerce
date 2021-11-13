@@ -7,6 +7,7 @@ const paymentMethodRoutes = require("./routes/paymentMethod");
 const addressRoutes = require("./routes/address");
 const provinceRoutes = require("./routes/province");
 const cityRoutes = require("./routes/city");
+const orderRoutes = require("./routes/order");
 
 const app = express();
 const PORT = process.env.PORT;
@@ -24,6 +25,7 @@ app.use("/api/payment-methods", paymentMethodRoutes);
 app.use("/api/addresses", addressRoutes);
 app.use("/api/provinces", provinceRoutes);
 app.use("/api/cities", cityRoutes);
+app.use("/api/orders", orderRoutes);
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);

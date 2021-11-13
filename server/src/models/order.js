@@ -18,12 +18,16 @@ module.exports = (sequelize, DataTypes) => {
       });
       this.hasMany(OrderDetail, {
         foreignKey: "order_id",
-        as: "orderdetails",
+        as: "orderDetails",
       });
     }
   }
   Order.init(
     {
+      order_number: {
+        type: DataTypes.STRING(14),
+        allowNull: false,
+      },
       paymentmethod_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -36,7 +40,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(30),
         allowNull: false,
       },
-
       subtotal: {
         type: DataTypes.FLOAT,
         allowNull: false,
@@ -74,7 +77,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "Order",
-      tableName: "categories",
+      tableName: "orders",
       updatedAt: false,
       underscored: true,
     }

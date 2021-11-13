@@ -5,11 +5,12 @@ module.exports = {
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
     host: process.env.DB_HOST,
-    dialect: process.env.DB_TYPE,
+    dialect: process.env.DB_DIALECT,
     define: {
       createdAt: "created_at",
       updatedAt: "updated_at",
     },
+    minifyAliases: true,
   },
   test: {
     username: "root",
