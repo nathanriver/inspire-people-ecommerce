@@ -10,9 +10,9 @@ exports.getCities = async (req, res) => {
     } = await RajaOngkir.get("/city", {
       params: { province },
     });
-    res.json({ data: results });
+    return res.json({ data: results });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       message: "Error in getting cities",
     });
   }
@@ -28,9 +28,9 @@ exports.getCity = async (req, res) => {
     } = await RajaOngkir.get("/city", {
       params: { id },
     });
-    res.json({ data: results });
+    return res.json({ data: results });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       message: "Error in getting city",
     });
   }

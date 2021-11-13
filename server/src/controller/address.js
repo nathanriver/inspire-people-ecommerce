@@ -15,9 +15,9 @@ exports.getUserAddresses = async (req, res) => {
         exclude: ["id", "user_id"],
       },
     });
-    res.json({ data });
+    return res.json({ data });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       message: "Error in getting addresses",
     });
   }

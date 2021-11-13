@@ -35,9 +35,9 @@ exports.getUserOrders = async (req, res) => {
     });
     const orders = addresses.map((address) => address.orders);
     const data = _.flatten(orders);
-    res.json({ data });
+    return res.json({ data });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       message: "Error in getting orders",
     });
   }
@@ -90,9 +90,9 @@ exports.getOrder = async (req, res) => {
       ],
     });
 
-    res.json({ data });
+    return res.json({ data });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       message: "Error in getting order detail",
     });
   }

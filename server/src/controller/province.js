@@ -7,9 +7,9 @@ exports.getProvinces = async (req, res) => {
         rajaongkir: { results },
       },
     } = await RajaOngkir.get("/province");
-    res.json({ data: results });
+    return res.json({ data: results });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       message: "Error in getting provinces",
     });
   }
