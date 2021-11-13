@@ -8,6 +8,7 @@ const addressRoutes = require("./routes/address");
 const provinceRoutes = require("./routes/province");
 const cityRoutes = require("./routes/city");
 const orderRoutes = require("./routes/order");
+const authRoutes = require("./routes/auth");
 
 const app = express();
 const PORT = process.env.PORT;
@@ -19,6 +20,7 @@ app.get("/", (req, res) => {
   res.send("Hello World");
 });
 
+app.use("/api", authRoutes);
 app.use("/api/banners", bannerRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/payment-methods", paymentMethodRoutes);
