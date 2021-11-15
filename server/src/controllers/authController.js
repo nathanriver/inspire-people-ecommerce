@@ -30,12 +30,10 @@ exports.register = async (req, res) => {
       JWT_SECRET
     );
     return res.json({
-      data: {
-        id: newUser.uuid,
-        name: newUser.name,
-        email: newUser.email,
-        token,
-      },
+      id: newUser.uuid,
+      name: newUser.name,
+      email: newUser.email,
+      token,
     });
   } catch (error) {
     return res.status(500).json({ message: "Error in creating user" });
@@ -64,12 +62,10 @@ exports.login = async (req, res) => {
       JWT_SECRET
     );
     return res.json({
-      data: {
-        id: user.uuid,
-        name: user.name,
-        email: user.email,
-        token,
-      },
+      id: user.uuid,
+      name: user.name,
+      email: user.email,
+      token,
     });
   } catch (error) {
     return res.status(500).json({ message: "Login error" });

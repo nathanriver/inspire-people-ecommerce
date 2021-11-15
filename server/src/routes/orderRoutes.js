@@ -1,5 +1,5 @@
 const express = require("express");
-const { getUserOrders, getOrder } = require("../controller/order");
+const { getUserOrders, getOrder } = require("../controllers/orderController");
 
 const router = express.Router();
 

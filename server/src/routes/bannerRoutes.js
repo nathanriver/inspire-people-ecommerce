@@ -1,5 +1,5 @@
 const express = require("express");
-const { getBanners } = require("../controller/banner");
+const { getBanners } = require("../controllers/bannerController");
 
 const router = express.Router();
 
