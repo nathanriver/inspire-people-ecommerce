@@ -1,10 +1,11 @@
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import CartItem from "../components/CartItem";
-import { cartItems } from "../data";
 import currencyFormat from "../utils/currencyFormat";
 
 const Cart = () => {
-  const itemCount = cartItems.length;
+  const { cartItems } = useSelector((state) => state.cart);
+  const itemCount = cartItems.reduce((a, b) => a + b.quantity, 0);
   const subTotal = cartItems.reduce((a, b) => a + b.price * b.quantity, 0);
 
   return (

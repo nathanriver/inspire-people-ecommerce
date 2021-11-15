@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProduct } from "../features/product/productSlice";
+import { addToCart } from "../features/cart/cartSlice";
 import { useParams } from "react-router";
 import currencyFormat from "../utils/currencyFormat";
 import Loader from "../components/Loader";
@@ -26,9 +27,9 @@ const Product = () => {
   };
 
   const handleQuantityChange = (e) => {
-    const value = e.target.value;
+    const value = Number(e.target.value);
     if (value > 0 && value <= stock) {
-      setQuantity(e.target.value);
+      setQuantity(value);
     }
   };
 
@@ -41,6 +42,17 @@ const Product = () => {
   const handleQuantityDecrement = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1);
+    }
+  };
+
+  const handleAddToCart = () => {
+    if (size !== 0 && quantity > 0) {
+      dispatch(
+        addToCart({
+          productDetailId: Number(size),
+          quantity,
+        })
+      );
     }
   };
 
@@ -62,7 +74,7 @@ const Product = () => {
         <p className="text-lg font-semibold mb-2 text-gray-600">
           {currencyFormat(price)}
         </p>
-        <form className="space-y-3">
+        <div className="space-y-3">
           <div>
             <label className="label" htmlFor="size">
               Size
@@ -138,10 +150,10 @@ const Product = () => {
             </div>
           </div>
           {stock ? <p className="text-sm">Stock: {stock}</p> : null}
-          <button className="btn" disabled>
+          <button className="btn" onClick={() => handleAddToCart()}>
             Add to Cart
           </button>
-        </form>
+        </div>
       </div>
     </div>
   );

@@ -9,6 +9,7 @@ const provinceRoutes = require("./routes/provinceRoutes");
 const cityRoutes = require("./routes/cityRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const authRoutes = require("./routes/authRoutes");
+const productDetailRoutes = require("./routes/productDetailRoutes");
 
 const app = express();
 const PORT = process.env.PORT;
@@ -28,6 +29,7 @@ app.use("/api/addresses", addressRoutes);
 app.use("/api/provinces", provinceRoutes);
 app.use("/api/cities", cityRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/product-details", productDetailRoutes);
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
