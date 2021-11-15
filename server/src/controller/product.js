@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 const { Product } = require("../models");
 
 exports.getProducts = async (req, res) => {
@@ -14,7 +15,7 @@ exports.getProducts = async (req, res) => {
         ],
       },
     });
-    return res.json({ data });
+    return res.json(data);
   } catch (error) {
     return res.status(500).json({
       message: "Error in getting products",
@@ -34,6 +35,11 @@ exports.getProductBySlug = async (req, res) => {
       },
       include: {
         association: "productDetails",
+        where: {
+          stock: {
+            [Op.gt]: 0,
+          },
+        },
         attributes: ["id", "stock"],
         include: {
           association: "productSize",
@@ -41,8 +47,7 @@ exports.getProductBySlug = async (req, res) => {
         },
       },
     });
-
-    return res.json({ data });
+    return res.json(data);
   } catch (error) {
     return res.status(500).json({
       message: "Error in getting product",

@@ -8,7 +8,7 @@ exports.getBanners = async (req, res) => {
       },
       attributes: ["image_url"],
     });
-    return res.json({ data });
+    return res.json(data);
   } catch (error) {
     return res.status(500).json({
       message: "Error in getting banners",
