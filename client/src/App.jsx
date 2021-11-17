@@ -4,6 +4,7 @@ import Routes from "./Routes";
 import NavBar from "./components/NavBar";
 import SideBar from "./components/SideBar";
 import Footer from "./components/Footer";
+import Snackbar from "./components/Snackbar";
 
 const App = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,6 +32,7 @@ const App = () => {
       <NavBar toggle={toggle} />
       <SideBar toggle={toggle} isOpen={isOpen} />
       <Routes />
+      <Snackbar />
       <Footer />
     </Router>
   );

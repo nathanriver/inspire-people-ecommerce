@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProduct } from "../features/product/productSlice";
 import { addToCart } from "../features/cart/cartSlice";
+import { setSnackbar } from "../features/snackbar/snackbarSlice";
 import { useParams } from "react-router";
 import currencyFormat from "../utils/currencyFormat";
 import Loader from "../components/Loader";
@@ -22,7 +23,7 @@ const Product = () => {
     if (productDetail) {
       setStock(productDetail.stock);
       setSize(value);
-      setQuantity(0);
+      setQuantity(1);
     }
   };
 
@@ -46,11 +47,27 @@ const Product = () => {
   };
 
   const handleAddToCart = () => {
+    if (!size) {
+      dispatch(
+        setSnackbar({
+          isOpen: true,
+          type: "Error",
+          message: "Please select a size",
+        })
+      );
+    }
     if (size !== 0 && quantity > 0) {
       dispatch(
         addToCart({
           productDetailId: Number(size),
           quantity,
+        })
+      );
+      dispatch(
+        setSnackbar({
+          isOpen: true,
+          type: "Success",
+          message: "Added to cart",
         })
       );
     }
