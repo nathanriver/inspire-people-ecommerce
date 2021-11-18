@@ -10,7 +10,8 @@ module.exports = {
           role: "Admin",
           name: "Rick Sanchez",
           email: "rick@email.com",
-          password: "123456",
+          password:
+            "$2a$10$qhCrvyb9bQeXFk3AIduNsO5iLsZHQYnqofhET4tZmUgygG8LR/EQe",
           created_at: new Date(),
         },
         {
@@ -18,7 +19,8 @@ module.exports = {
           role: "User",
           name: "Morty Smith",
           email: "morty@email.com",
-          password: "123456",
+          password:
+            "$2a$10$qhCrvyb9bQeXFk3AIduNsO5iLsZHQYnqofhET4tZmUgygG8LR/EQe",
           created_at: new Date(),
         },
         {
@@ -26,7 +28,8 @@ module.exports = {
           role: "User",
           name: "Summer Smith",
           email: "summer@email.com",
-          password: "123456",
+          password:
+            "$2a$10$qhCrvyb9bQeXFk3AIduNsO5iLsZHQYnqofhET4tZmUgygG8LR/EQe",
           created_at: new Date(),
         },
       ],

@@ -1,6 +1,9 @@
+import { useDispatch } from "react-redux";
+import { logout } from "../features/auth/authSlice";
 import { Link } from "react-router-dom";
 
 const AccountLayout = ({ children, title }) => {
+  const dispatch = useDispatch();
   return (
     <>
       <div className="flex justify-between">
@@ -23,9 +26,13 @@ const AccountLayout = ({ children, title }) => {
                 </Link>
               </li>
               <li>
-                <Link to="#" className="font-medium">
+                <button
+                  type="button"
+                  className="font-medium"
+                  onClick={() => dispatch(logout())}
+                >
                   Sign Out
-                </Link>
+                </button>
               </li>
             </ul>
           </div>

@@ -3,3 +3,7 @@ const axios = require("axios");
 export const API = axios.create({
   baseURL: "http://localhost:5000/api",
 });
+
+export const setToken = (token) => {
+  API.defaults.headers.common["x-auth-token"] = token ?? "";
+};

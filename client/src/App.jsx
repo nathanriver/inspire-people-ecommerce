@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { autoLogin } from "./features/auth/authSlice";
 import Routes from "./Routes";
 import NavBar from "./components/NavBar";
 import SideBar from "./components/SideBar";
@@ -8,6 +10,7 @@ import Snackbar from "./components/Snackbar";
 
 const App = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useDispatch();
 
   const toggle = () => {
     setIsOpen(!isOpen);
@@ -26,6 +29,10 @@ const App = () => {
       window.removeEventListener("resize", hideMenu);
     };
   });
+
+  useEffect(() => {
+    dispatch(autoLogin());
+  }, []);
 
   return (
     <Router>

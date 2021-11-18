@@ -1,7 +1,9 @@
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Logo from "../assets/images/logo.png";
 
 const NavBar = ({ toggle }) => {
+  const { user } = useSelector((state) => state.auth);
   return (
     <nav className="bg-black text-white px-4">
       <div className="container flex justify-between mx-auto items-center h-16">
@@ -31,12 +33,21 @@ const NavBar = ({ toggle }) => {
           <Link className="p-2" to="/cart">
             Cart
           </Link>
-          <Link className="p-2" to="/register">
-            Sign Up
-          </Link>
-          <Link className="p-2" to="/login">
-            Sign In
-          </Link>
+
+          {user ? (
+            <Link className="p-2" to="/account">
+              {user.name}
+            </Link>
+          ) : (
+            <>
+              <Link className="p-2" to="/register">
+                Sign Up
+              </Link>
+              <Link className="p-2" to="/login">
+                Sign In
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </nav>

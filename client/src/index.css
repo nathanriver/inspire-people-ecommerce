@@ -24,6 +24,10 @@
   }
 }
 
+input.is-invalid {
+  @apply border-red-400 focus:border-red-600 focus:ring-red-600 hover:border-red-600;
+}
+
 .sidebar {
   @apply bg-black text-white w-2/5 h-screen fixed z-40 top-0 -left-full duration-700;
 }

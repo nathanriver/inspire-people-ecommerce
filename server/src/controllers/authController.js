@@ -3,6 +3,20 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = process.env.JWT_SECRET;
 
+exports.validate = async (req, res) => {
+  try {
+    const data = await User.findOne({
+      where: {
+        uuid: req.userId,
+      },
+      attributes: ["uuid", "name", "email"],
+    });
+    return res.json(data);
+  } catch (error) {
+    return res.status(400).json({ message: "Internal server error." });
+  }
+};
+
 exports.register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -33,6 +47,7 @@ exports.register = async (req, res) => {
       id: newUser.uuid,
       name: newUser.name,
       email: newUser.email,
+      isAdmin: false,
       token,
     });
   } catch (error) {
@@ -49,11 +64,11 @@ exports.login = async (req, res) => {
       },
     });
     if (!user) {
-      return res.status(400).json({ msg: "Invalid email or password" });
+      return res.status(400).json({ message: "Invalid email or password" });
     }
     const validPassword = bcrypt.compareSync(password, user.password);
     if (!validPassword) {
-      return res.status(400).json({ msg: "Invalid email or password" });
+      return res.status(400).json({ message: "Invalid email or password" });
     }
     const token = jwt.sign(
       {
@@ -65,6 +80,7 @@ exports.login = async (req, res) => {
       id: user.uuid,
       name: user.name,
       email: user.email,
+      isAdmin: user.role === "Admin",
       token,
     });
   } catch (error) {

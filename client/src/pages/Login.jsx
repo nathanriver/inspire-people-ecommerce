@@ -1,37 +1,60 @@
 import { Link } from "react-router-dom";
+import { Formik, Form } from "formik";
+import * as Yup from "yup";
+import TextField from "../components/TextField";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../features/auth/authSlice";
+import Error from "../components/Error";
+
+const initialValues = {
+  email: "",
+  password: "",
+};
+
+const loginSchema = Yup.object({
+  email: Yup.string()
+    .email("Please enter a valid email address.")
+    .required("Email is required."),
+  password: Yup.string().required("Password is required."),
+});
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const { user, isLoading, error } = useSelector((state) => state.auth);
+  const handleSubmit = (values) => {
+    dispatch(login(values));
+  };
+
   return (
     <>
-      <div className="w-80 mx-auto p-2">
+      <div className="w-full sm:w-80 mx-auto p-2">
         <p className="font-bold text-xl mb-2">Sign In</p>
-        <form className="space-y-3">
-          <div>
-            <label className="label" htmlFor="email">
-              Email
-            </label>
-            <input className="w-full" type="email" id="email" name="email" />
-          </div>
-          <div>
-            <label className="label" htmlFor="password">
-              Password
-            </label>
-            <input
-              className="w-full"
-              type="password"
-              id="password"
-              name="password"
-            />
-          </div>
-          <button className="btn">Sign In</button>
-          <p className="text-sm">
-            Don't have an account?
-            <Link to="/register" className="font-bold">
-              {" "}
-              Create an account.
-            </Link>
-          </p>
-        </form>
+        {error && <Error error={error} />}
+        <Formik
+          initialValues={initialValues}
+          validationSchema={loginSchema}
+          onSubmit={(values) => handleSubmit(values)}
+        >
+          {(props) => (
+            <Form className="space-y-3">
+              <TextField label="Email" name="email" type="email" id="email" />
+              <TextField
+                label="Password"
+                name="password"
+                type="password"
+                id="password"
+              />
+              <button className="btn">Sign In</button>
+              <p className="text-sm">
+                Don't have an account?
+                <Link to="/register" className="font-bold">
+                  {" "}
+                  Create an account.
+                </Link>
+              </p>
+            </Form>
+          )}
+        </Formik>
       </div>
     </>
   );
