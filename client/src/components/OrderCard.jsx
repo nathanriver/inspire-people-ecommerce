@@ -1,23 +1,29 @@
 import { Link } from "react-router-dom";
-import OrderItem from "./OrderItem";
+import parseDate from "../utils/parseDate";
 import currencyFormat from "../utils/currencyFormat";
+import OrderItem from "./OrderItem";
 
-const OrderCard = ({ order: { id, orderDate, items, status, total } }) => {
+const OrderCard = ({
+  order: { order_number, created_at, orderDetails, status, total },
+}) => {
   return (
     <div className="card border-b border-gray-400 rounded-sm py-2 px-4">
       <div className="w-full">
         <div className="flex-column md:flex justify-between mb-2 text-sm">
-          <p>{orderDate}</p>
-          <p>Order Number: {id}</p>
+          <p>{parseDate(created_at)}</p>
+          <p>Order Number: {order_number}</p>
           <p className="font-bold">{status}</p>
         </div>
         <hr className="py-2" />
-        {items.map((item, i) => (
-          <OrderItem key={i} item={item} />
+        {orderDetails.map((orderDetail, i) => (
+          <OrderItem key={i} orderDetail={orderDetail} />
         ))}
         <hr className="py-2" />
         <div className="flex items-center justify-between">
-          <Link to={`/account/orders/${id}`} className="font-medium py-2">
+          <Link
+            to={`/account/orders/${order_number}`}
+            className="font-medium py-2"
+          >
             Order Detail
           </Link>
           <p className="text-right">

@@ -2,7 +2,13 @@ import { Link } from "react-router-dom";
 import currencyFormat from "../utils/currencyFormat";
 
 const OrderItem = ({
-  item: { name, price, image_url, slug, size, quantity },
+  orderDetail: {
+    quantity,
+    productDetail: {
+      product: { slug, name, price, image_url },
+      productSize: { name: size },
+    },
+  },
 }) => {
   return (
     <Link to={`/products/${slug}`}>
