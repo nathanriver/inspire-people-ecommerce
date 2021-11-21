@@ -8,9 +8,13 @@ module.exports = {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      order_number: {
-        type: DataTypes.STRING(14),
+      user_id: {
+        type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+          model: "users",
+          key: "id",
+        },
       },
       paymentmethod_id: {
         type: DataTypes.INTEGER,
@@ -20,19 +24,14 @@ module.exports = {
           key: "id",
         },
       },
-      address_id: {
-        type: DataTypes.INTEGER,
+      order_number: {
+        type: DataTypes.STRING(14),
         allowNull: false,
-        references: {
-          model: "addresses",
-          key: "id",
-        },
       },
       status: {
         type: DataTypes.STRING(30),
         allowNull: false,
       },
-
       subtotal: {
         type: DataTypes.FLOAT,
         allowNull: false,

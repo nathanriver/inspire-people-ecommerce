@@ -1,39 +1,27 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class Address extends Model {
+  class OrderAddress extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({ User, Order, City }) {
-      this.belongsTo(User, {
-        foreignKey: "user_id",
-        as: "user",
-      });
+    static associate({ City, Order }) {
       this.belongsTo(City, {
         foreignKey: "city_id",
         as: "city",
       });
+      this.belongsTo(Order, {
+        foreignKey: "order_id",
+        as: "order",
+      });
     }
   }
-  Address.init(
+  OrderAddress.init(
     {
-      uuid: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
-      },
-      user_id: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
       city_id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      label: {
-        type: DataTypes.STRING(100),
         allowNull: false,
       },
       recipient_name: {
@@ -56,18 +44,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(255),
         allowNull: false,
       },
-      is_default: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-      },
     },
     {
       sequelize,
-      modelName: "Address",
-      tableName: "addresses",
+      modelName: "OrderAddress",
+      tableName: "orderaddresses",
       timestamps: false,
       underscored: true,
     }
   );
-  return Address;
+  return OrderAddress;
 };

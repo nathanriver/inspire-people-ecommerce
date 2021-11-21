@@ -3,39 +3,34 @@ const _ = require("lodash");
 
 exports.getUserOrders = async (req, res) => {
   try {
-    const { addresses } = await User.findOne({
+    const user = await User.findOne({
       where: {
-        uuid: "1ecab83a-9549-4cd9-b2b2-60f1857d9c8d",
+        uuid: req.userId,
       },
       include: {
-        association: "addresses",
+        association: "orders",
+        attributes: ["order_number", "status", "total", "created_at"],
         include: {
-          association: "orders",
-          attributes: ["order_number", "status", "total", "created_at"],
+          association: "orderDetails",
+          attributes: ["quantity"],
           include: {
-            association: "orderDetails",
-            attributes: ["quantity"],
-            include: {
-              association: "productDetail",
-              attributes: ["id"],
-              include: [
-                {
-                  association: "productSize",
-                  attributes: ["name"],
-                },
-                {
-                  association: "product",
-                  attributes: ["slug", "name", "color", "price", "image_url"],
-                },
-              ],
-            },
+            association: "productDetail",
+            attributes: ["id"],
+            include: [
+              {
+                association: "productSize",
+                attributes: ["name"],
+              },
+              {
+                association: "product",
+                attributes: ["slug", "name", "color", "price", "image_url"],
+              },
+            ],
           },
         },
       },
     });
-    const orders = addresses.map((address) => address.orders);
-    const data = _.flatten(orders);
-    return res.json(data);
+    return res.json(user.orders);
   } catch (error) {
     return res.status(500).json({
       message: "Error in getting orders",

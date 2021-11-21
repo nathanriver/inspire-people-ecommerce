@@ -6,9 +6,9 @@ module.exports = {
       "orders",
       [
         {
-          order_number: "KVXJ9K1515V0JY",
+          user_id: 2,
           paymentmethod_id: 3,
-          address_id: 1,
+          order_number: "KVXJ9K1515V0JY",
           status: "Pending",
           subtotal: 198000,
           courier: "JNE",
@@ -24,7 +24,7 @@ module.exports = {
         {
           order_number: "KVXJ9KQI2V2HXC",
           paymentmethod_id: 2,
-          address_id: 2,
+          user_id: 2,
           status: "Pending",
           subtotal: 99000,
           courier: "JNE",
@@ -38,9 +38,9 @@ module.exports = {
           created_at: new Date(),
         },
         {
-          order_number: "KVXJ9KXJ6L1Q5R",
+          user_id: 2,
           paymentmethod_id: 2,
-          address_id: 2,
+          order_number: "KVXJ9KXJ6L1Q5R",
           status: "Pending",
           subtotal: 99000,
           courier: "JNE",
