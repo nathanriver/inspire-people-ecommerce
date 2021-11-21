@@ -5,7 +5,7 @@ import currencyFormat from "../utils/currencyFormat";
 import { getUserAddresses } from "../features/address/addressSlice";
 import { setSnackbar } from "../features/snackbar/snackbarSlice";
 import AddAddressForm from "../components/AddAddressForm";
-import OrderItem from "../components/OrderItem";
+import CheckoutItem from "../components/CheckoutItem";
 import Loader from "../components/Loader";
 import Modal from "../components/Modal";
 
@@ -133,7 +133,7 @@ const Checkout = () => {
           <div className="py-2 px-4">
             <p className="mb-2 font-bold">Item List</p>
             {cartItems.map((item, i) => (
-              <OrderItem key={i} item={item} />
+              <CheckoutItem key={i} item={item} />
             ))}
           </div>
         </div>
