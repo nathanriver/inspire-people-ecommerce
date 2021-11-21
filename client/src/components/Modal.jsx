@@ -1,16 +1,43 @@
-const Modal = () => {
+import { useEffect } from "react";
+
+const Modal = ({ isOpen, toggle, title, children }) => {
+  useEffect(() => {
+    document.body.style.overflowY = isOpen ? "hidden" : "";
+  }, [isOpen]);
+
   return (
-    <div className="bg-black bg-opacity-50 absolute inset-0 flex items-center justify-center">
-      <div className="bg-white max-w-sm py-2 px-4 rounded space-y-3">
-        <div className="font-semibold">Title</div>
-        <div className="text-sm">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat,
-          ullam.
+    <div
+      className={`${
+        isOpen ? "flex" : "hidden"
+      }  bg-black bg-opacity-50 fixed inset-0 items-center justify-center z-50`}
+    >
+      <div className="bg-white max-w-sm rounded space-y-3 w-full">
+        <div className="flex justify-between p-4">
+          <div className="font-semibold">{title}</div>
+          <button onClick={toggle}>
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
         </div>
-        <div class="flex justify-end space-x-3">
-          <button class="btn-secondary">Cancel</button>
-          <button class="btn">Action</button>
+        <div className="text-sm max-h-96 overflow-y-auto">
+          <div className="px-4 pb-4">{children}</div>
         </div>
+        {/* <div className="flex justify-end space-x-3 py-2 px-4">
+          <button className="btn-secondary">Cancel</button>
+          <button className="btn">Action</button>
+        </div> */}
       </div>
     </div>
   );

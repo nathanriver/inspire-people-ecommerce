@@ -4,7 +4,7 @@ exports.getUserAddresses = async (req, res) => {
   try {
     const user = await User.findOne({
       where: {
-        uuid: "1ecab83a-9549-4cd9-b2b2-60f1857d9c8d",
+        uuid: req.userId,
       },
     });
     const data = await Address.findAll({
@@ -14,11 +14,49 @@ exports.getUserAddresses = async (req, res) => {
       attributes: {
         exclude: ["id", "user_id"],
       },
+      order: [["is_default", "DESC"]],
     });
     return res.json(data);
   } catch (error) {
     return res.status(500).json({
       message: "Error in getting addresses",
+    });
+  }
+};
+
+exports.addAddress = async (req, res) => {
+  try {
+    const user = await User.findOne({
+      where: {
+        uuid: req.userId,
+      },
+    });
+    await Address.update(
+      { is_default: false },
+      {
+        where: {
+          user_id: user.id,
+        },
+      }
+    );
+    await Address.create({
+      ...req.body,
+      user_id: user.id,
+      is_default: true,
+    });
+    const data = await Address.findAll({
+      where: {
+        user_id: user.id,
+      },
+      attributes: {
+        exclude: ["id", "user_id"],
+      },
+      order: [["is_default", "DESC"]],
+    });
+    return res.json(data);
+  } catch (error) {
+    return res.status(500).json({
+      message: "Error in adding address",
     });
   }
 };

@@ -21,6 +21,14 @@ module.exports = {
           key: "id",
         },
       },
+      city_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: "cities",
+          key: "id",
+        },
+      },
       label: {
         type: DataTypes.STRING(100),
         allowNull: false,
@@ -31,22 +39,6 @@ module.exports = {
       },
       phone_number: {
         type: DataTypes.STRING(16),
-        allowNull: false,
-      },
-      province_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      province_name: {
-        type: DataTypes.STRING(150),
-        allowNull: false,
-      },
-      city_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      city_name: {
-        type: DataTypes.STRING(150),
         allowNull: false,
       },
       subdistrict: {

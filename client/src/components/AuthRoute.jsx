@@ -1,18 +1,18 @@
 import { Route, Redirect } from "react-router-dom";
 import Loader from "./Loader";
 
-const PrivateRoute = ({ authState, component: Component, ...props }) => {
+const AuthRoute = ({ authState, component: Component, ...props }) => {
   return (
     <Route {...props}>
       {authState.isLoading ? (
         <Loader />
-      ) : authState.user ? (
+      ) : !authState.user ? (
         <Component />
       ) : (
-        <Redirect to="/login" />
+        <Redirect to="/" />
       )}
     </Route>
   );
 };
 
-export default PrivateRoute;
+export default AuthRoute;

@@ -7,10 +7,14 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({ User, Order }) {
+    static associate({ User, Order, City }) {
       this.belongsTo(User, {
         foreignKey: "user_id",
         as: "user",
+      });
+      this.belongsTo(City, {
+        foreignKey: "city_id",
+        as: "city",
       });
       this.hasMany(Order, {
         foreignKey: "address_id",
@@ -26,6 +30,11 @@ module.exports = (sequelize, DataTypes) => {
       },
       user_id: {
         type: DataTypes.STRING,
+        allowNull: false,
+      },
+      city_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
       },
       label: {
         type: DataTypes.STRING(100),
@@ -37,22 +46,6 @@ module.exports = (sequelize, DataTypes) => {
       },
       phone_number: {
         type: DataTypes.STRING(16),
-        allowNull: false,
-      },
-      province_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      province_name: {
-        type: DataTypes.STRING(150),
-        allowNull: false,
-      },
-      city_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      city_name: {
-        type: DataTypes.STRING(150),
         allowNull: false,
       },
       subdistrict: {

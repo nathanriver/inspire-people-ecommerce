@@ -1,12 +1,10 @@
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Formik, Form } from "formik";
-import TextField from "../components/TextField";
-import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
+import { Formik, Form } from "formik";
+import * as Yup from "yup";
 import { register } from "../features/auth/authSlice";
+import TextField from "../components/TextField";
 import Error from "../components/Error";
-import { useHistory } from "react-router-dom";
 
 const initialValues = {
   name: "",
@@ -29,9 +27,8 @@ const registerSchema = Yup.object({
 });
 
 const Register = () => {
-  const history = useHistory();
   const dispatch = useDispatch();
-  const { user, isLoading, error } = useSelector((state) => state.auth);
+  const { error } = useSelector((state) => state.auth);
   const handleSubmit = (values) => {
     dispatch(register(values));
   };

@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import currencyFormat from "../utils/currencyFormat";
 import { getProduct } from "../features/product/productSlice";
 import { addToCart } from "../features/cart/cartSlice";
 import { setSnackbar } from "../features/snackbar/snackbarSlice";
-import { useParams } from "react-router";
-import currencyFormat from "../utils/currencyFormat";
 import Loader from "../components/Loader";
 import Error from "../components/Error";
 

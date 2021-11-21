@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import TextField from "../components/TextField";
-import { useDispatch, useSelector } from "react-redux";
 import { login } from "../features/auth/authSlice";
+import TextField from "../components/TextField";
 import Error from "../components/Error";
 
 const initialValues = {
@@ -20,7 +20,7 @@ const loginSchema = Yup.object({
 
 const Login = () => {
   const dispatch = useDispatch();
-  const { user, isLoading, error } = useSelector((state) => state.auth);
+  const { error } = useSelector((state) => state.auth);
   const handleSubmit = (values) => {
     dispatch(login(values));
   };

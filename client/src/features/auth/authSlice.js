@@ -64,6 +64,7 @@ const authSlice = createSlice({
       state.user = action.payload;
       state.error = null;
       localStorage.setItem("token", JSON.stringify(action.payload.token));
+      setToken(action.payload.token);
     },
     [register.rejected]: (state, action) => {
       state.isLoading = false;
@@ -79,6 +80,7 @@ const authSlice = createSlice({
       state.user = action.payload;
       state.error = null;
       localStorage.setItem("token", JSON.stringify(action.payload.token));
+      setToken(action.payload.token);
     },
     [login.rejected]: (state, action) => {
       state.isLoading = false;

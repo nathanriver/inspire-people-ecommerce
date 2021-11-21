@@ -1,7 +1,9 @@
 import { Route, Switch, Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Container from "./components/Container";
+import Loader from "./components/Loader";
 import PrivateRoute from "./components/PrivateRoute";
+import AuthRoute from "./components/AuthRoute";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -12,13 +14,19 @@ import Account from "./pages/Account";
 import MyAddress from "./pages/MyAddress";
 import MyOrder from "./pages/MyOrder";
 import OrderDetail from "./pages/OrderDetail";
-import Loader from "./components/Loader";
+
+const authRoutes = [
+  {
+    path: "/login",
+    component: Login,
+  },
+  {
+    path: "/register",
+    component: Register,
+  },
+];
 
 const privateRoutes = [
-  {
-    path: "/checkout",
-    component: Checkout,
-  },
   {
     path: "/account",
     component: Account,
@@ -38,32 +46,40 @@ const privateRoutes = [
 ];
 
 const Routes = () => {
-  const { user, isLoading } = useSelector((state) => state.auth);
+  const { auth: authState, cart: cartState } = useSelector((state) => state);
   return (
     <Container>
       <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/login">
-          {!user ? <Login /> : <Redirect to="/" />}
-        </Route>
-        <Route exact path="/register">
-          {!user ? <Register /> : <Redirect to="/" />}
-        </Route>
+        <Route exact path="/" component={Home} />\
         <Route exact path="/products/:slug" component={Product} />
         <Route exact path="/cart" component={Cart} />
-        {isLoading ? (
-          <Loader />
-        ) : (
-          privateRoutes.map(({ path, component }, i) => (
-            <PrivateRoute
-              key={i}
-              exact
-              path={path}
-              component={component}
-              user={user}
-            />
-          ))
-        )}
+        <Route exact path="/checkout">
+          {authState.isLoading || cartState.isLoading ? (
+            <Loader />
+          ) : authState.user && cartState.cartItems.length ? (
+            <Checkout />
+          ) : (
+            <Redirect to="/login" />
+          )}
+        </Route>
+        {authRoutes.map(({ path, component }, i) => (
+          <AuthRoute
+            key={i}
+            exact
+            path={path}
+            component={component}
+            authState={authState}
+          />
+        ))}
+        {privateRoutes.map(({ path, component }, i) => (
+          <PrivateRoute
+            key={i}
+            exact
+            path={path}
+            component={component}
+            authState={authState}
+          />
+        ))}
       </Switch>
     </Container>
   );

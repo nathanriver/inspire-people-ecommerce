@@ -1,6 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../features/auth/authSlice";
 
 const SideBar = ({ isOpen, toggle }) => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const handleLogout = () => {
+    dispatch(logout());
+    history.push("/login");
+    toggle();
+  };
   return (
     <>
       <nav className={isOpen ? "sidebar active" : "sidebar"}>
@@ -58,6 +67,11 @@ const SideBar = ({ isOpen, toggle }) => {
             <Link className="sidebar-item" to="/account/orders">
               Orders
             </Link>
+          </li>
+          <li>
+            <button className="sidebar-item" onClick={() => handleLogout()}>
+              Sign Out
+            </button>
           </li>
         </ul>
       </nav>

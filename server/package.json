@@ -25,9 +25,10 @@
     "migrate-fresh-seed": "sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all",
     "down": "sequelize db:migrate:undo",
     "down-all": "sequelize db:migrate:undo:all",
-    "make-seed": "sequelize seed:generate --name slider-image",
+    "make-seed": "sequelize seed:generate --name city",
     "seed": "sequelize db:seed:all",
-    "seed-undo-all": "sequelize db:seed:undo:all"
+    "seed-undo-all": "sequelize db:seed:undo:all",
+    "make-model": "sequelize model:generate --name City --attributes name:string"
   },
   "author": "",
   "license": "ISC"

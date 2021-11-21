@@ -1,37 +1,22 @@
-const { RajaOngkir } = require("../config");
+const { City } = require("../models");
 
 exports.getCities = async (req, res) => {
   try {
-    const { province } = req.query;
-    const {
-      data: {
-        rajaongkir: { results },
+    const { province_id } = req.query;
+    if (!province_id) {
+      return res.status(400).json({
+        message: "Province id not found.",
+      });
+    }
+    const data = await City.findAll({
+      where: {
+        province_id,
       },
-    } = await RajaOngkir.get("/city", {
-      params: { province },
     });
-    return res.json({ results });
+    return res.json(data);
   } catch (error) {
     return res.status(500).json({
-      message: "Error in getting cities",
-    });
-  }
-};
-
-exports.getCity = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const {
-      data: {
-        rajaongkir: { results },
-      },
-    } = await RajaOngkir.get("/city", {
-      params: { id },
-    });
-    return res.json({ results });
-  } catch (error) {
-    return res.status(500).json({
-      message: "Error in getting city",
+      message: "Error in getting cities.",
     });
   }
 };

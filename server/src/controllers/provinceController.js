@@ -1,16 +1,12 @@
-const { RajaOngkir } = require("../config");
+const { Province } = require("../models");
 
 exports.getProvinces = async (req, res) => {
   try {
-    const {
-      data: {
-        rajaongkir: { results },
-      },
-    } = await RajaOngkir.get("/province");
-    return res.json({ results });
+    const data = await Province.findAll();
+    return res.json(data);
   } catch (error) {
     return res.status(500).json({
-      message: "Error in getting provinces",
+      message: "Error in getting provinces.",
     });
   }
 };

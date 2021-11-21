@@ -1,11 +1,11 @@
 const Address = ({
-  address: { label, recipient, phoneNumber, fullAddress, isDefault },
+  address: { label, recipient_name, phone_number, full_address, is_default },
 }) => {
   return (
     <div className="card-border-b">
       <div className="flex space-x-1 items-center">
         <p className="font-bold">{label}</p>
-        {isDefault && (
+        {is_default && (
           <svg
             className="w-4 h-4"
             fill="none"
@@ -23,15 +23,15 @@ const Address = ({
         )}
       </div>
       <p>
-        {recipient}, {phoneNumber}
+        {recipient_name}, +62{phone_number}
       </p>
-      <p className="mb-2">{fullAddress}</p>
+      <p className="mb-2">{full_address}</p>
       <div className="flex space-x-1">
         <button className="font-medium py-2 pr-4">Change</button>
-        {!isDefault && (
+        {!is_default && (
           <button className="font-medium py-2 pr-4">Set Default</button>
         )}
-        {!isDefault && (
+        {!is_default && (
           <button className="font-medium py-2 pr-4">Delete</button>
         )}
       </div>

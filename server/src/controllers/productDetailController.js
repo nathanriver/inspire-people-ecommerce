@@ -12,7 +12,7 @@ exports.getProductDetail = async (req, res) => {
         {
           association: "product",
           attributes: {
-            exclude: ["id", "category_id", "weight", "created_at", "summary"],
+            exclude: ["id", "category_id", "created_at", "summary"],
           },
         },
         {

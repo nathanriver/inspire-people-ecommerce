@@ -32,7 +32,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(autoLogin());
-  }, []);
+  }, [dispatch]);
 
   return (
     <Router>
