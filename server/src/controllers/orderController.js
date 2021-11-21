@@ -1,5 +1,4 @@
 const { User, Order } = require("../models");
-const _ = require("lodash");
 
 exports.getUserOrders = async (req, res) => {
   try {
@@ -46,7 +45,14 @@ exports.getOrder = async (req, res) => {
         order_number: orderNumber,
       },
       attributes: {
-        exclude: ["id", "paymentmethod_id", "address_id", "weight", "origin"],
+        exclude: [
+          "id",
+          "user_id",
+          "paymentmethod_id",
+          "address_id",
+          "weight",
+          "origin",
+        ],
       },
       include: [
         {
@@ -56,13 +62,8 @@ exports.getOrder = async (req, res) => {
           },
         },
         {
-          association: "address",
-          attributes: [
-            "label",
-            "recipient_name",
-            "phone_number",
-            "full_address",
-          ],
+          association: "orderAddress",
+          attributes: ["recipient_name", "phone_number", "full_address"],
         },
         {
           association: "orderDetails",
@@ -84,11 +85,10 @@ exports.getOrder = async (req, res) => {
         },
       ],
     });
-
     return res.json(data);
   } catch (error) {
     return res.status(500).json({
-      message: "Error in getting order detail",
+      message: "Error in getting order detail.",
     });
   }
 };

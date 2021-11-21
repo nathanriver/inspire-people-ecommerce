@@ -40,7 +40,7 @@ const privateRoutes = [
     component: MyOrder,
   },
   {
-    path: "/account/orders/:id",
+    path: "/account/orders/:orderNumber",
     component: OrderDetail,
   },
 ];
