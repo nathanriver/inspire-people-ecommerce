@@ -1,8 +1,43 @@
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { deleteAddress } from "../features/address/addressSlice";
+import ConfirmationModal from "./ConfirmationModal";
+
 const Address = ({
-  address: { label, recipient_name, phone_number, full_address, is_default },
+  address: {
+    uuid,
+    label,
+    recipient_name,
+    phone_number,
+    full_address,
+    is_default,
+  },
 }) => {
+  const dispatch = useDispatch();
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+
+  const handleConfirmationModalOpen = () => {
+    setShowConfirmationModal(true);
+  };
+
+  const handleConfirmationModalClose = () => {
+    setShowConfirmationModal(false);
+  };
+
+  const handleDeleteAddress = () => {
+    dispatch(deleteAddress(uuid));
+  };
+
   return (
     <div className="card-border-b">
+      <ConfirmationModal
+        title="Delete Address"
+        contentText="Are you sure want to delete the address?"
+        actionBtnText="Delete"
+        action={handleDeleteAddress}
+        isOpen={showConfirmationModal}
+        closeMenu={handleConfirmationModalClose}
+      />
       <div className="flex space-x-1 items-center">
         <p className="font-bold">{label}</p>
         {is_default && (
@@ -32,7 +67,12 @@ const Address = ({
           <button className="font-medium py-2 pr-4">Set Default</button>
         )}
         {!is_default && (
-          <button className="font-medium py-2 pr-4">Delete</button>
+          <button
+            className="font-medium py-2 pr-4"
+            onClick={handleConfirmationModalOpen}
+          >
+            Delete
+          </button>
         )}
       </div>
     </div>

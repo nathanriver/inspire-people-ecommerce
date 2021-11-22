@@ -19,7 +19,7 @@ exports.getUserAddresses = async (req, res) => {
     return res.json(data);
   } catch (error) {
     return res.status(500).json({
-      message: "Error in getting addresses",
+      message: "Error in getting addresses.",
     });
   }
 };
@@ -56,7 +56,23 @@ exports.addAddress = async (req, res) => {
     return res.json(data);
   } catch (error) {
     return res.status(500).json({
-      message: "Error in adding address",
+      message: "Error in adding address.",
+    });
+  }
+};
+
+exports.deleteAddress = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await Address.destroy({
+      where: {
+        uuid: id,
+      },
+    });
+    return res.json("Address deleted.");
+  } catch (error) {
+    return res.status(500).json({
+      message: "Error in deleting address.",
     });
   }
 };

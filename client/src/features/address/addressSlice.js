@@ -21,6 +21,18 @@ export const addAddress = createAsyncThunk(
   }
 );
 
+export const deleteAddress = createAsyncThunk(
+  "address/deleteAddress",
+  async (id, { rejectWithValue }) => {
+    try {
+      await API.delete(`/addresses/${id}`);
+      return id;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
 const initialState = {
   addresses: [],
   isLoading: true,
@@ -52,6 +64,20 @@ const addressSlice = createSlice({
       state.addresses = action.payload;
     },
     [addAddress.rejected]: (state) => {
+      state.isLoading = false;
+    },
+
+    //  Delete address
+    [deleteAddress.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [deleteAddress.fulfilled]: (state, action) => {
+      state.addresses = state.addresses.filter(
+        (address) => address.uuid !== action.payload
+      );
+      state.isLoading = false;
+    },
+    [deleteAddress.rejected]: (state) => {
       state.isLoading = false;
     },
   },
