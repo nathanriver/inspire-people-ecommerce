@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { deleteAddress } from "../features/address/addressSlice";
+import { deleteAddress, updateAddress } from "../features/address/addressSlice";
 import ConfirmationModal from "./ConfirmationModal";
 
 const Address = ({
@@ -26,6 +26,17 @@ const Address = ({
 
   const handleDeleteAddress = () => {
     dispatch(deleteAddress(uuid));
+  };
+
+  const handleSetDefaultAddress = () => {
+    dispatch(
+      updateAddress({
+        id: uuid,
+        updateData: {
+          is_default: true,
+        },
+      })
+    );
   };
 
   return (
@@ -64,7 +75,12 @@ const Address = ({
       <div className="flex space-x-1">
         <button className="font-medium py-2 pr-4">Change</button>
         {!is_default && (
-          <button className="font-medium py-2 pr-4">Set Default</button>
+          <button
+            className="font-medium py-2 pr-4"
+            onClick={handleSetDefaultAddress}
+          >
+            Set Default
+          </button>
         )}
         {!is_default && (
           <button

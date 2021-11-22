@@ -33,6 +33,18 @@ export const deleteAddress = createAsyncThunk(
   }
 );
 
+export const updateAddress = createAsyncThunk(
+  "address/updateAddress",
+  async ({ id, updateData }, { rejectWithValue }) => {
+    try {
+      const { data } = await API.patch(`/addresses/${id}`, updateData);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
 const initialState = {
   addresses: [],
   isLoading: true,
@@ -78,6 +90,18 @@ const addressSlice = createSlice({
       state.isLoading = false;
     },
     [deleteAddress.rejected]: (state) => {
+      state.isLoading = false;
+    },
+
+    //  Update address
+    [updateAddress.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [updateAddress.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.addresses = action.payload;
+    },
+    [updateAddress.rejected]: (state) => {
       state.isLoading = false;
     },
   },

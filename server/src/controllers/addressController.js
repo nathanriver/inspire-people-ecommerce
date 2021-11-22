@@ -76,3 +76,43 @@ exports.deleteAddress = async (req, res) => {
     });
   }
 };
+
+exports.updateAddress = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findOne({
+      where: {
+        uuid: req.userId,
+      },
+    });
+    if (req.body.is_default) {
+      await Address.update(
+        { is_default: false },
+        {
+          where: {
+            user_id: user.id,
+          },
+        }
+      );
+    }
+    await Address.update(req.body, {
+      where: {
+        uuid: id,
+      },
+    });
+    const data = await Address.findAll({
+      where: {
+        user_id: user.id,
+      },
+      attributes: {
+        exclude: ["id", "user_id"],
+      },
+      order: [["is_default", "DESC"]],
+    });
+    return res.json(data);
+  } catch (error) {
+    return res.status(500).json({
+      message: "Error in updating address.",
+    });
+  }
+};
