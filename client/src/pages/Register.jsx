@@ -52,6 +52,7 @@ const Register = () => {
                 name="password"
                 type="password"
                 id="password"
+                autoComplete="off"
               />
               <p className="text-sm">
                 Already have an account?

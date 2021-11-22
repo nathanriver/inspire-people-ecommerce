@@ -37,7 +37,7 @@ input.is-invalid {
 }
 
 .sidebar-item {
-  @apply block py-3 px-2 text-sm font-medium;
+  @apply block py-3 px-2 text-sm;
 }
 
 .slick-dots {

@@ -1,15 +1,37 @@
+import { useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../features/auth/authSlice";
 
 const SideBar = ({ isOpen, toggle }) => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const { user } = useSelector((state) => state.auth);
+
   const handleLogout = () => {
     dispatch(logout());
     history.push("/login");
     toggle();
   };
+
+  useEffect(() => {
+    const closeSideBar = () => {
+      toggle();
+    };
+
+    const elements = document.getElementsByClassName("sidebar-item");
+
+    Array.from(elements).forEach(function (element) {
+      element.addEventListener("click", closeSideBar);
+    });
+
+    return () => {
+      Array.from(elements).forEach(function (element) {
+        element.removeEventListener("click", closeSideBar);
+      });
+    };
+  }, [toggle]);
+
   return (
     <>
       <nav className={isOpen ? "sidebar active" : "sidebar"}>
@@ -31,7 +53,7 @@ const SideBar = ({ isOpen, toggle }) => {
             </svg>
           </button>
         </div>
-        <ul>
+        <ul className="px-4">
           <li>
             <Link className="sidebar-item" to="/">
               Home
@@ -42,37 +64,42 @@ const SideBar = ({ isOpen, toggle }) => {
               Cart
             </Link>
           </li>
-          <li>
-            <Link className="sidebar-item" to="/register">
-              Sign Up
-            </Link>
-          </li>
-          <li>
-            <Link className="sidebar-item" to="/login">
-              Sign In
-            </Link>
-          </li>
-          <p className="font-bold pl-2 mt-4">Account</p>
-          <li>
-            <Link className="sidebar-item" to="/account">
-              Profile
-            </Link>
-          </li>
-          <li>
-            <Link className="sidebar-item" to="/account/address">
-              Address
-            </Link>
-          </li>
-          <li>
-            <Link className="sidebar-item" to="/account/orders">
-              Orders
-            </Link>
-          </li>
-          <li>
-            <button className="sidebar-item" onClick={() => handleLogout()}>
-              Sign Out
-            </button>
-          </li>
+          {!user ? (
+            <>
+              <li>
+                <Link className="sidebar-item" to="/register">
+                  Sign Up
+                </Link>
+              </li>
+              <li className="sidebar-item">
+                <Link to="/login">Sign In</Link>
+              </li>
+            </>
+          ) : (
+            <>
+              <p className="font-semibold pl-2 mt-4">Account</p>
+              <li>
+                <Link className="sidebar-item" to="/account">
+                  Profile
+                </Link>
+              </li>
+              <li>
+                <Link className="sidebar-item" to="/account/address">
+                  Address
+                </Link>
+              </li>
+              <li>
+                <Link className="sidebar-item" to="/account/orders">
+                  Orders
+                </Link>
+              </li>
+              <li>
+                <button className="sidebar-item" onClick={() => handleLogout()}>
+                  Sign Out
+                </button>
+              </li>
+            </>
+          )}
         </ul>
       </nav>
     </>

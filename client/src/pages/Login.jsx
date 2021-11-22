@@ -43,8 +43,11 @@ const Login = () => {
                 name="password"
                 type="password"
                 id="password"
+                autoComplete="off"
               />
-              <button className="btn">Sign In</button>
+              <button className="btn" type="submit">
+                Sign In
+              </button>
               <p className="text-sm">
                 Don't have an account?
                 <Link to="/register" className="font-bold">
