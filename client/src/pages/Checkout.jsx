@@ -5,6 +5,7 @@ import currencyFormat from "../utils/currencyFormat";
 import { getUserAddresses } from "../features/address/addressSlice";
 import { setSnackbar } from "../features/snackbar/snackbarSlice";
 import AddressForm from "../components/AddressForm";
+import Address from "../components/Address";
 import CheckoutItem from "../components/CheckoutItem";
 import Loader from "../components/Loader";
 import Modal from "../components/Modal";
@@ -17,6 +18,7 @@ const Checkout = () => {
   const [paymentMethod, setPaymentMethod] = useState("");
   const [shippingFee, setShippingFee] = useState(0);
   const [showAddressModal, setShowAddressModal] = useState(false);
+  const [showAddressListModal, setShowAddressListModal] = useState(false);
   const {
     cart: { cartItems },
     address: { addresses, isLoading },
@@ -32,6 +34,13 @@ const Checkout = () => {
   };
   const handleAddressModalClose = () => {
     setShowAddressModal(false);
+  };
+
+  const handleAddressListModalOpen = () => {
+    setShowAddressListModal(true);
+  };
+  const handleAddressListModalClose = () => {
+    setShowAddressListModal(false);
   };
 
   const handleCourierChange = (e) => {
@@ -99,32 +108,52 @@ const Checkout = () => {
 
   return (
     <>
-      <Modal
-        title="Add Address"
-        isOpen={showAddressModal}
-        closeModal={handleAddressModalClose}
-      >
-        <AddressForm isEditMode={false} closeModal={handleAddressModalClose} />
-      </Modal>
       <p className="text-xl mb-4 font-bold">Checkout</p>
       <div className="flex flex-wrap justify-between md:space-y-0">
         <div className="w-full md:w-3/6">
           <div className="card-border-b">
             <div className="flex justify-between mb-2">
               <p className="font-bold">Shipping Address</p>
-              {address && <button className="btn">Change</button>}
+              {address && (
+                <button className="btn" onClick={handleAddressListModalOpen}>
+                  Change
+                </button>
+              )}
             </div>
             {isLoading ? (
               <Loader />
             ) : !address ? (
-              <div className="space-y-3">
-                <p>No shipping address yet.</p>
-                <button className="btn" onClick={handleAddressModalOpen}>
-                  Add Address
-                </button>
-              </div>
+              <>
+                <Modal
+                  title="Add Address"
+                  isOpen={showAddressModal}
+                  closeModal={handleAddressModalClose}
+                >
+                  <AddressForm
+                    isEditMode={false}
+                    closeModal={handleAddressModalClose}
+                  />
+                </Modal>
+                <div className="space-y-3">
+                  <p>No shipping address yet.</p>
+                  <button className="btn" onClick={handleAddressModalOpen}>
+                    Add Address
+                  </button>
+                </div>
+              </>
             ) : (
               <>
+                <Modal
+                  title="Change Address"
+                  isOpen={showAddressListModal}
+                  closeModal={handleAddressListModalClose}
+                >
+                  <>
+                    {addresses.map((address) => (
+                      <Address key={address.uuid} address={address} />
+                    ))}
+                  </>
+                </Modal>
                 <p>{address.label}</p>
                 <p>
                   {address.recipient_name} | +62{address.phone_number}
