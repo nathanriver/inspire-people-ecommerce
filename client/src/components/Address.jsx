@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { deleteAddress, updateAddress } from "../features/address/addressSlice";
+import AddAddressForm from "./AddressForm";
+import Modal from "./Modal";
 import ConfirmationModal from "./ConfirmationModal";
 
 const Address = ({
+  address,
   address: {
     uuid,
     label,
@@ -15,6 +18,7 @@ const Address = ({
 }) => {
   const dispatch = useDispatch();
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [showAddressModal, setAddAddressModal] = useState(false);
 
   const handleConfirmationModalOpen = () => {
     setShowConfirmationModal(true);
@@ -26,6 +30,14 @@ const Address = ({
 
   const handleDeleteAddress = () => {
     dispatch(deleteAddress(uuid));
+  };
+
+  const handleAddressModalOpen = () => {
+    setAddAddressModal(true);
+  };
+
+  const handleAddressModalClose = () => {
+    setAddAddressModal(false);
   };
 
   const handleSetDefaultAddress = () => {
@@ -41,13 +53,24 @@ const Address = ({
 
   return (
     <div className="card-border-b">
+      <Modal
+        title="Update Address"
+        isOpen={showAddressModal}
+        closeModal={handleAddressModalClose}
+      >
+        <AddAddressForm
+          isEditMode={true}
+          address={address}
+          closeModal={handleAddressModalClose}
+        />
+      </Modal>
       <ConfirmationModal
         title="Delete Address"
         contentText="Are you sure want to delete the address?"
         actionBtnText="Delete"
         action={handleDeleteAddress}
         isOpen={showConfirmationModal}
-        closeMenu={handleConfirmationModalClose}
+        closeModal={handleConfirmationModalClose}
       />
       <div className="flex space-x-1 items-center">
         <p className="font-bold">{label}</p>
@@ -73,7 +96,12 @@ const Address = ({
       </p>
       <p className="mb-2">{full_address}</p>
       <div className="flex space-x-1">
-        <button className="font-medium py-2 pr-4">Change</button>
+        <button
+          className="font-medium py-2 pr-4"
+          onClick={handleAddressModalOpen}
+        >
+          Change
+        </button>
         {!is_default && (
           <button
             className="font-medium py-2 pr-4"

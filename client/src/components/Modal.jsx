@@ -1,6 +1,10 @@
 import { useEffect } from "react";
 
-const Modal = ({ isOpen, toggle, title, children }) => {
+const Modal = ({ isOpen, closeModal, title, children }) => {
+  const handleCloseModal = () => {
+    closeModal();
+  };
+
   useEffect(() => {
     document.body.style.overflowY = isOpen ? "hidden" : "";
   }, [isOpen]);
@@ -14,7 +18,7 @@ const Modal = ({ isOpen, toggle, title, children }) => {
       <div className="bg-white max-w-sm rounded space-y-3 w-full">
         <div className="flex justify-between p-4">
           <div className="font-semibold">{title}</div>
-          <button onClick={toggle}>
+          <button onClick={handleCloseModal}>
             <svg
               className="w-6 h-6"
               fill="none"

@@ -14,6 +14,10 @@ exports.getUserAddresses = async (req, res) => {
       attributes: {
         exclude: ["id", "user_id"],
       },
+      include: {
+        association: "city",
+        attributes: ["id", "province_id"],
+      },
       order: [["is_default", "DESC"]],
     });
     return res.json(data);
@@ -50,6 +54,10 @@ exports.addAddress = async (req, res) => {
       },
       attributes: {
         exclude: ["id", "user_id"],
+      },
+      include: {
+        association: "city",
+        attributes: ["id", "province_id"],
       },
       order: [["is_default", "DESC"]],
     });
@@ -106,6 +114,10 @@ exports.updateAddress = async (req, res) => {
       },
       attributes: {
         exclude: ["id", "user_id"],
+      },
+      include: {
+        association: "city",
+        attributes: ["id", "province_id"],
       },
       order: [["is_default", "DESC"]],
     });

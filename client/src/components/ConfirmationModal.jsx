@@ -6,15 +6,15 @@ const ConfirmationModal = ({
   actionBtnText,
   action,
   isOpen,
-  closeMenu,
+  closeModal,
 }) => {
   const handleAction = () => {
     action();
-    closeMenu();
+    closeModal();
   };
 
-  const handleCloseMenu = () => {
-    closeMenu();
+  const handleCloseModal = () => {
+    closeModal();
   };
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const ConfirmationModal = ({
       <div className="bg-white max-w-sm rounded space-y-3 w-full">
         <div className="flex justify-between p-4">
           <div className="font-semibold">{title}</div>
-          <button onClick={handleCloseMenu}>
+          <button onClick={handleCloseModal}>
             <svg
               className="w-6 h-6"
               fill="none"
@@ -51,7 +51,7 @@ const ConfirmationModal = ({
           <div className="px-4 pb-4">{contentText}</div>
         </div>
         <div className="flex justify-end space-x-3 py-2 px-4">
-          <button className="btn-secondary" onClick={handleCloseMenu}>
+          <button className="btn-secondary" onClick={handleCloseModal}>
             Cancel
           </button>
           <button className="btn" onClick={handleAction}>

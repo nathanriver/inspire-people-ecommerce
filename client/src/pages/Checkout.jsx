@@ -4,7 +4,7 @@ import { API } from "../config";
 import currencyFormat from "../utils/currencyFormat";
 import { getUserAddresses } from "../features/address/addressSlice";
 import { setSnackbar } from "../features/snackbar/snackbarSlice";
-import AddAddressForm from "../components/AddAddressForm";
+import AddressForm from "../components/AddressForm";
 import CheckoutItem from "../components/CheckoutItem";
 import Loader from "../components/Loader";
 import Modal from "../components/Modal";
@@ -16,7 +16,7 @@ const Checkout = () => {
   const [paymentMethods, setPaymentMethods] = useState([]);
   const [paymentMethod, setPaymentMethod] = useState("");
   const [shippingFee, setShippingFee] = useState(0);
-  const [showAddAddressModal, setShowAddAddressModal] = useState(false);
+  const [showAddressModal, setShowAddressModal] = useState(false);
   const {
     cart: { cartItems },
     address: { addresses, isLoading },
@@ -27,8 +27,11 @@ const Checkout = () => {
   const subTotal = cartItems.reduce((a, b) => a + b.price * b.quantity, 0);
   const total = subTotal + shippingFee;
 
-  const toggleAddAddressModal = () => {
-    setShowAddAddressModal(!showAddAddressModal);
+  const handleAddressModalOpen = () => {
+    setShowAddressModal(true);
+  };
+  const handleAddressModalClose = () => {
+    setShowAddressModal(false);
   };
 
   const handleCourierChange = (e) => {
@@ -98,10 +101,10 @@ const Checkout = () => {
     <>
       <Modal
         title="Add Address"
-        isOpen={showAddAddressModal}
-        toggle={toggleAddAddressModal}
+        isOpen={showAddressModal}
+        closeModal={handleAddressModalClose}
       >
-        <AddAddressForm toggle={toggleAddAddressModal} />
+        <AddressForm isEditMode={false} closeModal={handleAddressModalClose} />
       </Modal>
       <p className="text-xl mb-4 font-bold">Checkout</p>
       <div className="flex flex-wrap justify-between md:space-y-0">
@@ -116,7 +119,7 @@ const Checkout = () => {
             ) : !address ? (
               <div className="space-y-3">
                 <p>No shipping address yet.</p>
-                <button className="btn" onClick={() => toggleAddAddressModal()}>
+                <button className="btn" onClick={handleAddressModalOpen}>
                   Add Address
                 </button>
               </div>
