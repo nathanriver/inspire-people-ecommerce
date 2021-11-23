@@ -20,6 +20,10 @@ module.exports = (sequelize, DataTypes) => {
   }
   OrderAddress.init(
     {
+      order_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
       city_id: {
         type: DataTypes.INTEGER,
         allowNull: false,

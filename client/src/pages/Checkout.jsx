@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { API } from "../config";
 import currencyFormat from "../utils/currencyFormat";
 import { getUserAddresses } from "../features/address/addressSlice";
@@ -12,6 +13,7 @@ import Modal from "../components/Modal";
 
 const Checkout = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [courier, setCourier] = useState("");
   const [couriers, setCouriers] = useState([]);
   const [paymentMethods, setPaymentMethods] = useState([]);
@@ -80,6 +82,22 @@ const Checkout = () => {
           message: "Please select a payment method",
         })
       );
+    } else {
+      const addOrder = async () => {
+        const items = cartItems.map((item) => {
+          return {
+            productdetail_id: item.productdetail_id,
+            quantity: item.quantity,
+          };
+        });
+        const { data } = await API.post("/orders", {
+          paymentmethod_id: paymentMethod,
+          courier_service: courier,
+          items,
+        });
+        history.push(`/account/orders/${data}`);
+      };
+      addOrder();
     }
   };
 

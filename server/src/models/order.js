@@ -52,6 +52,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(10),
         allowNull: false,
       },
+      courier_service: {
+        type: DataTypes.STRING(10),
+        allowNull: false,
+      },
       shipping_fee: {
         type: DataTypes.FLOAT,
         allowNull: false,
