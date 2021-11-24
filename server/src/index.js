@@ -13,6 +13,8 @@ const orderRoutes = require("./routes/orderRoutes");
 const authRoutes = require("./routes/authRoutes");
 const productDetailRoutes = require("./routes/productDetailRoutes");
 const courierRoutes = require("./routes/courierRoutes");
+const profileRoutes = require("./routes/profileRoutes");
+const changePasswordRoutes = require("./routes/changePasswordRoutes");
 
 const app = express();
 const PORT = process.env.PORT;
@@ -36,6 +38,8 @@ app.use("/api/cities", cityRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/product-details", productDetailRoutes);
 app.use("/api/couriers", courierRoutes);
+app.use("/api/profile", profileRoutes);
+app.use("/api/change-password", changePasswordRoutes);
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);

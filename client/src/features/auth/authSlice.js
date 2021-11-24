@@ -39,6 +39,18 @@ export const autoLogin = createAsyncThunk(
   }
 );
 
+export const updateProfile = createAsyncThunk(
+  "auth/updateProfile",
+  async (updateData, { rejectWithValue }) => {
+    try {
+      const { data } = await API.put("/profile", updateData);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
 const initialState = {
   user: null,
   isLoading: true,
@@ -97,6 +109,18 @@ const authSlice = createSlice({
       state.user = action.payload;
     },
     [autoLogin.rejected]: (state) => {
+      state.isLoading = false;
+    },
+
+    // Update profile
+    [updateProfile.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [updateProfile.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.user = { ...state.user, name: action.payload };
+    },
+    [updateProfile.rejected]: (state) => {
       state.isLoading = false;
     },
   },
