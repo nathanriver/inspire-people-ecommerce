@@ -28,7 +28,7 @@ const registerSchema = Yup.object({
 
 const Register = () => {
   const dispatch = useDispatch();
-  const { error } = useSelector((state) => state.auth);
+  const { registerError } = useSelector((state) => state.auth);
   const handleSubmit = (values) => {
     dispatch(register(values));
   };
@@ -37,7 +37,7 @@ const Register = () => {
     <>
       <div className="w-full sm:w-80 mx-auto p-2">
         <p className="font-bold text-xl mb-2">Sign Up</p>
-        {error && <Error error={error} />}
+        {registerError && <Error error={registerError} />}
         <Formik
           initialValues={initialValues}
           validationSchema={registerSchema}
@@ -55,9 +55,8 @@ const Register = () => {
                 autoComplete="off"
               />
               <p className="text-sm">
-                Already have an account?
+                Already have an account?&nbsp;
                 <Link to="/login" className="font-bold">
-                  {" "}
                   Login your account.
                 </Link>
               </p>

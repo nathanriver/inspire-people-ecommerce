@@ -9,6 +9,7 @@ import AddressForm from "../components/AddressForm";
 import Address from "../components/Address";
 import CheckoutItem from "../components/CheckoutItem";
 import Loader from "../components/Loader";
+import Error from "../components/Error";
 import Modal from "../components/Modal";
 
 const Checkout = () => {
@@ -21,6 +22,8 @@ const Checkout = () => {
   const [shippingFee, setShippingFee] = useState(0);
   const [showAddressModal, setShowAddressModal] = useState(false);
   const [showAddressListModal, setShowAddressListModal] = useState(false);
+  const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
+  const [error, setError] = useState(false);
   const {
     cart: { cartItems },
     address: { addresses, isLoading },
@@ -83,19 +86,26 @@ const Checkout = () => {
         })
       );
     } else {
+      const items = cartItems.map((item) => {
+        return {
+          productdetail_id: item.productdetail_id,
+          quantity: item.quantity,
+        };
+      });
       const addOrder = async () => {
-        const items = cartItems.map((item) => {
-          return {
-            productdetail_id: item.productdetail_id,
-            quantity: item.quantity,
-          };
-        });
-        const { data } = await API.post("/orders", {
-          paymentmethod_id: paymentMethod,
-          courier_service: courier,
-          items,
-        });
-        history.push(`/account/orders/${data}`);
+        setIsCheckoutLoading(true);
+        try {
+          const { data } = await API.post("/orders", {
+            paymentmethod_id: paymentMethod,
+            courier_service: courier,
+            items,
+          });
+          setIsCheckoutLoading(false);
+          history.push(`/account/orders/${data}`);
+        } catch (error) {
+          setIsCheckoutLoading(false);
+          setError(error.response.data.message);
+        }
       };
       addOrder();
     }
@@ -124,8 +134,11 @@ const Checkout = () => {
     }
   }, [address, totalWeight]);
 
-  return (
+  return isCheckoutLoading ? (
+    <Loader />
+  ) : (
     <>
+      {error && <Error error={error} />}
       <p className="text-xl mb-4 font-bold">Checkout</p>
       <div className="flex flex-wrap justify-between md:space-y-0">
         <div className="w-full md:w-3/6">

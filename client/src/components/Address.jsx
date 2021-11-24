@@ -1,21 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { deleteAddress, updateAddress } from "../features/address/addressSlice";
 import AddAddressForm from "./AddressForm";
 import Modal from "./Modal";
 import ConfirmationModal from "./ConfirmationModal";
 
-const Address = ({
-  address,
-  address: {
-    uuid,
-    label,
-    recipient_name,
-    phone_number,
-    full_address,
-    is_default,
-  },
-}) => {
+const Address = ({ address }) => {
   const dispatch = useDispatch();
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [showAddressModal, setAddAddressModal] = useState(false);
@@ -29,7 +19,7 @@ const Address = ({
   };
 
   const handleDeleteAddress = () => {
-    dispatch(deleteAddress(uuid));
+    dispatch(deleteAddress(address.uuid));
   };
 
   const handleAddressModalOpen = () => {
@@ -43,13 +33,17 @@ const Address = ({
   const handleSetDefaultAddress = () => {
     dispatch(
       updateAddress({
-        id: uuid,
+        id: address.uuid,
         updateData: {
           is_default: true,
         },
       })
     );
   };
+
+  useEffect(() => {
+    return () => {};
+  }, []);
 
   return (
     <div className="card-border-b">
@@ -73,8 +67,8 @@ const Address = ({
         closeModal={handleConfirmationModalClose}
       />
       <div className="flex space-x-1 items-center">
-        <p className="font-bold">{label}</p>
-        {is_default && (
+        <p className="font-bold">{address.label}</p>
+        {address.is_default && (
           <svg
             className="w-4 h-4"
             fill="none"
@@ -92,9 +86,9 @@ const Address = ({
         )}
       </div>
       <p>
-        {recipient_name}, +62{phone_number}
+        {address.recipient_name}, +62{address.phone_number}
       </p>
-      <p className="mb-2">{full_address}</p>
+      <p className="mb-2">{address.full_address}</p>
       <div className="flex space-x-1">
         <button
           className="font-medium py-2 pr-4"
@@ -102,7 +96,7 @@ const Address = ({
         >
           Change
         </button>
-        {!is_default && (
+        {!address.is_default && (
           <button
             className="font-medium py-2 pr-4"
             onClick={handleSetDefaultAddress}
@@ -110,7 +104,7 @@ const Address = ({
             Set Default
           </button>
         )}
-        {!is_default && (
+        {!address.is_default && (
           <button
             className="font-medium py-2 pr-4"
             onClick={handleConfirmationModalOpen}

@@ -20,7 +20,8 @@ const loginSchema = Yup.object({
 
 const Login = () => {
   const dispatch = useDispatch();
-  const { error } = useSelector((state) => state.auth);
+  const { loginError } = useSelector((state) => state.auth);
+
   const handleSubmit = (values) => {
     dispatch(login(values));
   };
@@ -29,7 +30,7 @@ const Login = () => {
     <>
       <div className="w-full sm:w-80 mx-auto p-2">
         <p className="font-bold text-xl mb-2">Sign In</p>
-        {error && <Error error={error} />}
+        {loginError && <Error error={loginError} />}
         <Formik
           initialValues={initialValues}
           validationSchema={loginSchema}
@@ -49,9 +50,8 @@ const Login = () => {
                 Sign In
               </button>
               <p className="text-sm">
-                Don't have an account?
+                Don't have an account?&nbsp;
                 <Link to="/register" className="font-bold">
-                  {" "}
                   Create an account.
                 </Link>
               </p>

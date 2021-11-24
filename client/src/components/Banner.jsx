@@ -1,17 +1,21 @@
+import { useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getBanners } from "../features/banners/bannersSlice";
+import { API } from "../config";
+import Loader from "./Loader";
 
 const Banner = () => {
-  const dispatch = useDispatch();
-  const { banners } = useSelector((state) => state.banners);
+  const [banners, setBanners] = useState(null);
 
   useEffect(() => {
-    dispatch(getBanners());
-  }, [dispatch]);
+    const getBanners = async () => {
+      const { data } = await API.get("/banners");
+      setBanners(data);
+    };
+    getBanners();
+  }, []);
 
   const settings = {
     dots: true,
@@ -25,14 +29,17 @@ const Banner = () => {
   return (
     <div className="mb-4">
       <Slider {...settings}>
-        {banners &&
+        {!banners ? (
+          <Loader />
+        ) : (
           banners.map((banner, i) => {
             return (
               <div key={i}>
                 <img src={banner.image_url} alt={`banner-${i}`} />
               </div>
             );
-          })}
+          })
+        )}
       </Slider>
     </div>
   );

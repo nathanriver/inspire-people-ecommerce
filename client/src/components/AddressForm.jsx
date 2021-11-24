@@ -32,7 +32,7 @@ const addressSchema = Yup.object({
     .required("Full address is required."),
 });
 
-const AddAddressForm = ({ isEditMode, closeModal, address }) => {
+const AddressForm = ({ isEditMode, closeModal, address }) => {
   const dispatch = useDispatch();
   const [provinces, setProvinces] = useState([]);
   const [cities, setCities] = useState([]);
@@ -91,6 +91,10 @@ const AddAddressForm = ({ isEditMode, closeModal, address }) => {
       getCities();
     }
   }, [isEditMode, address]);
+
+  useEffect(() => {
+    return () => {};
+  }, []);
 
   return (
     <>
@@ -175,4 +179,4 @@ const AddAddressForm = ({ isEditMode, closeModal, address }) => {
   );
 };
 
-export default AddAddressForm;
+export default AddressForm;

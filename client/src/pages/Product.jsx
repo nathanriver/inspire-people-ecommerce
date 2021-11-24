@@ -1,25 +1,25 @@
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import { API } from "../config";
 import currencyFormat from "../utils/currencyFormat";
-import { getProduct } from "../features/product/productSlice";
 import { addToCart } from "../features/cart/cartSlice";
 import { setSnackbar } from "../features/snackbar/snackbarSlice";
 import Loader from "../components/Loader";
 import Error from "../components/Error";
 
 const Product = () => {
-  const { slug } = useParams();
   const dispatch = useDispatch();
-  const { product, isLoading, error } = useSelector((state) => state.product);
-  const { name, price, image_url, productDetails } = product;
+  const { slug } = useParams();
+  const [product, setProduct] = useState(null);
+  const [error, setError] = useState(null);
   const [quantity, setQuantity] = useState(0);
-  const [size, setSize] = useState(0);
+  const [size, setSize] = useState("");
   const [stock, setStock] = useState(null);
 
   const handleSizeChange = (e) => {
-    const value = e.target.value;
-    const productDetail = productDetails.find((p) => p.id === Number(value));
+    const value = Number(e.target.value);
+    const productDetail = product.productDetails.find((p) => p.id === value);
     if (productDetail) {
       setStock(productDetail.stock);
       setSize(value);
@@ -56,10 +56,10 @@ const Product = () => {
         })
       );
     }
-    if (size !== 0 && quantity > 0) {
+    if (size && quantity > 0) {
       dispatch(
         addToCart({
-          productDetailId: Number(size),
+          productDetailId: size,
           quantity,
         })
       );
@@ -74,22 +74,34 @@ const Product = () => {
   };
 
   useEffect(() => {
-    dispatch(getProduct(slug));
-  }, [dispatch, slug]);
+    const getProduct = async () => {
+      try {
+        const { data } = await API.get(`/products/${slug}`);
+        setProduct(data);
+      } catch (error) {
+        setError(error.response.data.message);
+      }
+    };
+    getProduct();
+  }, [slug]);
 
-  return isLoading ? (
-    <Loader />
-  ) : error ? (
+  return error ? (
     <Error error={error} />
+  ) : !product ? (
+    <Loader />
   ) : (
     <div className="flex flex-wrap justify-between text-black">
       <div className="w-full md:w-2/4 p-2">
-        <img src={image_url} alt="tshirt1" className="md:w-80 mx-auto" />
+        <img
+          src={product.image_url}
+          alt="tshirt1"
+          className="md:w-80 mx-auto"
+        />
       </div>
       <div className="w-full md:w-2/4 p-2">
-        <p className="font-bold text-xl ">{name}</p>
+        <p className="font-bold text-xl ">{product.name}</p>
         <p className="text-lg font-semibold mb-2 text-gray-600">
-          {currencyFormat(price)}
+          {currencyFormat(product.price)}
         </p>
         <div className="space-y-3">
           <div>
@@ -103,10 +115,10 @@ const Product = () => {
               value={size}
               onChange={(e) => handleSizeChange(e)}
             >
-              <option value={0} disabled hidden>
+              <option value="" disabled hidden>
                 Select
               </option>
-              {productDetails.map((p, i) => (
+              {product.productDetails.map((p, i) => (
                 <option key={i} value={p.id}>
                   {p.productSize.name}
                 </option>
@@ -121,7 +133,7 @@ const Product = () => {
               <button
                 type="button"
                 className="btn-outline py-1 px-3"
-                onClick={() => handleQuantityDecrement()}
+                onClick={handleQuantityDecrement}
               >
                 <svg
                   className="w-5 h-5"
@@ -147,7 +159,7 @@ const Product = () => {
               <button
                 type="button"
                 className="btn-outline py-1 px-3"
-                onClick={() => handleQuantityIncrement()}
+                onClick={handleQuantityIncrement}
               >
                 <svg
                   className="w-5 h-5"
@@ -167,7 +179,7 @@ const Product = () => {
             </div>
           </div>
           {stock ? <p className="text-sm">Stock: {stock}</p> : null}
-          <button className="btn" onClick={() => handleAddToCart()}>
+          <button className="btn" onClick={handleAddToCart}>
             Add to Cart
           </button>
         </div>

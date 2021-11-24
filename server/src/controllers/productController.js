@@ -18,7 +18,7 @@ exports.getProducts = async (req, res) => {
     return res.json(data);
   } catch (error) {
     return res.status(500).json({
-      message: "Error in getting products",
+      message: "Error in getting products.",
     });
   }
 };
@@ -50,7 +50,7 @@ exports.getProductBySlug = async (req, res) => {
     return res.json(data);
   } catch (error) {
     return res.status(500).json({
-      message: "Error in getting product",
+      message: "Error in getting product.",
     });
   }
 };

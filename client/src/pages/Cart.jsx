@@ -32,13 +32,15 @@ const Cart = () => {
         <div className="w-full md:w-3/6 space-y-10 py-2 px-4">
           {cartItems.length < 1 ? (
             <p>
-              Cart is empty.{" "}
+              Cart is empty.&nbsp;
               <Link to="/" className="font-medium">
                 Go Shopping
               </Link>
             </p>
           ) : (
-            cartItems.map((item, i) => <CartItem key={i} item={item} />)
+            cartItems.map((item) => (
+              <CartItem key={item.productdetail_id} item={item} />
+            ))
           )}
         </div>
         <div className="w-full md:w-2/6">
@@ -48,7 +50,7 @@ const Cart = () => {
               {currencyFormat(subTotal)}
             </p>
             <div className="my-2">
-              <button className="btn" onClick={() => handleCheckout()}>
+              <button className="btn" onClick={handleCheckout}>
                 Checkout
               </button>
             </div>

@@ -94,7 +94,7 @@ const SideBar = ({ isOpen, toggle }) => {
                 </Link>
               </li>
               <li>
-                <button className="sidebar-item" onClick={() => handleLogout()}>
+                <button className="sidebar-item" onClick={handleLogout}>
                   Sign Out
                 </button>
               </li>

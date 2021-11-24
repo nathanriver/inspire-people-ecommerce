@@ -42,7 +42,8 @@ export const autoLogin = createAsyncThunk(
 const initialState = {
   user: null,
   isLoading: true,
-  error: null,
+  loginError: null,
+  registerError: null,
 };
 
 const authSlice = createSlice({
@@ -61,14 +62,14 @@ const authSlice = createSlice({
     },
     [register.fulfilled]: (state, action) => {
       state.isLoading = false;
+      state.registerError = null;
       state.user = action.payload;
-      state.error = null;
       localStorage.setItem("token", JSON.stringify(action.payload.token));
       setToken(action.payload.token);
     },
     [register.rejected]: (state, action) => {
       state.isLoading = false;
-      state.error = action.payload;
+      state.registerError = action.payload;
     },
 
     // Login
@@ -77,14 +78,14 @@ const authSlice = createSlice({
     },
     [login.fulfilled]: (state, action) => {
       state.isLoading = false;
+      state.loginError = null;
       state.user = action.payload;
-      state.error = null;
       localStorage.setItem("token", JSON.stringify(action.payload.token));
       setToken(action.payload.token);
     },
     [login.rejected]: (state, action) => {
       state.isLoading = false;
-      state.error = action.payload;
+      state.loginError = action.payload;
     },
 
     // Auto Login
@@ -94,9 +95,8 @@ const authSlice = createSlice({
     [autoLogin.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.user = action.payload;
-      state.error = null;
     },
-    [autoLogin.rejected]: (state, action) => {
+    [autoLogin.rejected]: (state) => {
       state.isLoading = false;
     },
   },
