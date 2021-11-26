@@ -40,6 +40,9 @@ const cartSlice = createSlice({
         (item) => item.productdetail_id !== action.payload
       );
     },
+    clearCart: (state) => {
+      state.cartItems = [];
+    },
   },
   extraReducers: {
     [addToCart.pending]: (state) => {
@@ -68,6 +71,6 @@ const cartSlice = createSlice({
   },
 });
 
-export const { removeFromCart } = cartSlice.actions;
+export const { removeFromCart, clearCart } = cartSlice.actions;
 
 export default cartSlice.reducer;

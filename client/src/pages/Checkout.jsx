@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { API } from "../config";
 import currencyFormat from "../utils/currencyFormat";
 import { getUserAddresses } from "../features/address/addressSlice";
+import { clearCart } from "../features/cart/cartSlice";
 import { setSnackbar } from "../features/snackbar/snackbarSlice";
 import AddressForm from "../components/AddressForm";
 import Address from "../components/Address";
@@ -101,6 +102,7 @@ const Checkout = () => {
             items,
           });
           setIsCheckoutLoading(false);
+          dispatch(clearCart());
           history.push(`/account/orders/${data}`);
         } catch (error) {
           setIsCheckoutLoading(false);
