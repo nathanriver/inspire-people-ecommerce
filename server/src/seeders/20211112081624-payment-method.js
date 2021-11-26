@@ -6,13 +6,7 @@ module.exports = {
       "paymentmethods",
       [
         {
-          name: "Credit Card",
-        },
-        {
-          name: "BCA Virtual Account",
-        },
-        {
-          name: "GoPay",
+          name: "QRIS",
         },
       ],
       {}

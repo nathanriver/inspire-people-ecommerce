@@ -11,13 +11,15 @@ import Error from "../components/Error";
 const OrderDetail = () => {
   const { orderNumber } = useParams();
   const [order, setOrder] = useState();
+  const [qrcode, setQrcode] = useState();
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const getOrder = async (orderNumber) => {
       try {
         const { data } = await API.get(`/orders/${orderNumber}`);
-        setOrder(data);
+        setOrder(data.order);
+        setQrcode(data.qr);
       } catch (error) {
         setError(error.response.data.message);
       }
@@ -36,6 +38,16 @@ const OrderDetail = () => {
         )
       ) : (
         <div className="space-y-2">
+          <div className="card">
+            <p className="font-bold mb-2">Scan QR Code</p>
+            <div className="flex justify-center">
+              <img src={qrcode} alt="QR Code" />
+            </div>
+            <div>
+              <label className="label">Total</label>
+              <p>{currencyFormat(order.total)}</p>
+            </div>
+          </div>
           <div className="card-border-b">
             <p className="font-bold mb-2">Order Information</p>
             <div className="text-sm space-y-2">

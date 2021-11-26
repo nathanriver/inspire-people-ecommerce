@@ -6,8 +6,12 @@ const {
   OrderAddress,
   ProductDetail,
 } = require("../models");
-const { RajaOngkir } = require("../config");
-const generateOrderNumber = require("../utils/generateOrderNumber");
+const { x, RajaOngkir } = require("../config");
+const generateUniqueId = require("../utils/generateUniqueId");
+const QRCode = require("qrcode");
+
+const { QrCode } = x;
+const q = new QrCode();
 
 exports.getUserOrders = async (req, res) => {
   try {
@@ -15,30 +19,33 @@ exports.getUserOrders = async (req, res) => {
       where: {
         uuid: req.userId,
       },
+    });
+    const data = await Order.findAll({
+      where: {
+        user_id: user.id,
+      },
+      attributes: ["order_number", "status", "total", "created_at"],
+      order: [["created_at", "DESC"]],
       include: {
-        association: "orders",
-        attributes: ["order_number", "status", "total", "created_at"],
+        association: "orderDetails",
+        attributes: ["quantity"],
         include: {
-          association: "orderDetails",
-          attributes: ["quantity"],
-          include: {
-            association: "productDetail",
-            attributes: ["id"],
-            include: [
-              {
-                association: "productSize",
-                attributes: ["name"],
-              },
-              {
-                association: "product",
-                attributes: ["slug", "name", "color", "price", "image_url"],
-              },
-            ],
-          },
+          association: "productDetail",
+          attributes: ["id"],
+          include: [
+            {
+              association: "productSize",
+              attributes: ["name"],
+            },
+            {
+              association: "product",
+              attributes: ["slug", "name", "color", "price", "image_url"],
+            },
+          ],
         },
       },
     });
-    return res.json(user.orders);
+    return res.json(data);
   } catch (error) {
     return res.status(500).json({
       message: "Error in getting orders",
@@ -94,7 +101,13 @@ exports.getOrder = async (req, res) => {
         },
       ],
     });
-    return res.json(data);
+    const qrcode = await q.getCode({ externalID: data.transaction_id });
+    console.log("Retrieved QR Code", qrcode);
+    const qr = await QRCode.toDataURL(qrcode.qr_string);
+    return res.json({
+      order: data,
+      qr,
+    });
   } catch (error) {
     return res.status(500).json({
       message: "Error in getting order detail.",
@@ -162,11 +175,18 @@ exports.addOrder = async (req, res) => {
     );
     const shipping_fee = courierService.cost[0].value;
     const total = subtotal + shipping_fee;
+    const qrcode = await q.createCode({
+      externalID: generateUniqueId("transactionId"),
+      type: QrCode.Type.Dynamic,
+      callbackURL: "https://httpstat.us/200",
+      amount: total,
+    });
+    console.log("Created QR Code", qrcode);
     const order = await Order.create(
       {
         user_id: user.id,
         paymentmethod_id,
-        order_number: generateOrderNumber(),
+        order_number: generateUniqueId("orderNumber"),
         status: "Pending",
         subtotal,
         courier: "jne",
@@ -175,6 +195,7 @@ exports.addOrder = async (req, res) => {
         total,
         weight,
         origin: 23,
+        transaction_id: qrcode.external_id,
       },
       { transaction: t }
     );
@@ -200,6 +221,7 @@ exports.addOrder = async (req, res) => {
       },
       { transaction: t }
     );
+
     await t.commit();
     return res.json(order.order_number);
   } catch (error) {

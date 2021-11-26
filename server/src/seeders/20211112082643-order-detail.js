@@ -21,7 +21,7 @@ module.exports = {
           quantity: 1,
         },
         {
-          productdetail_id: 8,
+          productdetail_id: 14,
           order_id: 3,
           quantity: 1,
         },
