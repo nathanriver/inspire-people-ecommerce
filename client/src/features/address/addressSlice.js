@@ -4,7 +4,7 @@ import { API } from "../../config";
 export const getUserAddresses = createAsyncThunk(
   "address/getUserAddresses",
   async () => {
-    const { data } = await API.get("/addresses");
+    const { data } = await API.get("/user/addresses");
     return data;
   }
 );
@@ -13,7 +13,7 @@ export const addAddress = createAsyncThunk(
   "address/addAddress",
   async (addressData, { rejectWithValue }) => {
     try {
-      const { data } = await API.post("/addresses", addressData);
+      const { data } = await API.post("/user/addresses", addressData);
       return data;
     } catch (error) {
       return rejectWithValue(error.response.data.message);
@@ -25,7 +25,7 @@ export const deleteAddress = createAsyncThunk(
   "address/deleteAddress",
   async (id, { rejectWithValue }) => {
     try {
-      await API.delete(`/addresses/${id}`);
+      await API.delete(`/user/addresses/${id}`);
       return id;
     } catch (error) {
       return rejectWithValue(error.response.data.message);
@@ -37,7 +37,7 @@ export const updateAddress = createAsyncThunk(
   "address/updateAddress",
   async ({ id, updateData }, { rejectWithValue }) => {
     try {
-      const { data } = await API.patch(`/addresses/${id}`, updateData);
+      const { data } = await API.patch(`/user/addresses/${id}`, updateData);
       return data;
     } catch (error) {
       return rejectWithValue(error.response.data.message);

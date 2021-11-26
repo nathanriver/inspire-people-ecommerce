@@ -43,7 +43,7 @@ const Account = () => {
   const handleChangePassword = (values) => {
     const changePassword = async () => {
       try {
-        await API.put("/change-password", {
+        await API.put("/user/change-password", {
           old_password: values.old_password,
           new_password: values.new_password,
         });

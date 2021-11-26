@@ -17,7 +17,7 @@ const OrderDetail = () => {
   useEffect(() => {
     const getOrder = async (orderNumber) => {
       try {
-        const { data } = await API.get(`/orders/${orderNumber}`);
+        const { data } = await API.get(`/user/orders/${orderNumber}`);
         setOrder(data.order);
         setQrcode(data.qr);
       } catch (error) {

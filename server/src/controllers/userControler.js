@@ -1,6 +1,33 @@
 const { User } = require("../models");
 const bcrypt = require("bcryptjs");
 
+exports.updateProfile = async (req, res) => {
+  try {
+    const { name } = req.body;
+    await User.update(
+      {
+        name,
+      },
+      {
+        where: {
+          uuid: req.userId,
+        },
+      }
+    );
+    const data = await User.findOne({
+      attributes: ["name"],
+      where: {
+        uuid: req.userId,
+      },
+    });
+    return res.json(data.name);
+  } catch (error) {
+    return res.status(500).json({
+      message: "Error in updating profile.",
+    });
+  }
+};
+
 exports.changePassword = async (req, res) => {
   try {
     const { old_password, new_password } = req.body;

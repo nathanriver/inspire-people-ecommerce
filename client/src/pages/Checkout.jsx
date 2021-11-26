@@ -95,7 +95,7 @@ const Checkout = () => {
       const addOrder = async () => {
         setIsCheckoutLoading(true);
         try {
-          const { data } = await API.post("/orders", {
+          const { data } = await API.post("/user/orders", {
             paymentmethod_id: paymentMethod,
             courier_service: courier,
             items,

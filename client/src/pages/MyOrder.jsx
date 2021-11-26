@@ -7,7 +7,7 @@ const MyOrder = () => {
   const [orders, setOrders] = useState([]);
   useEffect(() => {
     const getOrders = async () => {
-      const { data } = await API.get("/orders");
+      const { data } = await API.get("/user/orders");
       setOrders(data);
     };
 
