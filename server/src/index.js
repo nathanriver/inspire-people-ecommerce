@@ -4,7 +4,7 @@ const cors = require("cors");
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const addressRoutes = require("./routes/addressRoutes");
-const orderRoutes = require("./routes/orderRoutes");
+const userOrderRoutes = require("./routes/userOrderRoutes");
 const bannerRoutes = require("./routes/bannerRoutes");
 const productRoutes = require("./routes/productRoutes");
 const paymentMethodRoutes = require("./routes/paymentMethodRoutes");
@@ -14,6 +14,7 @@ const productDetailRoutes = require("./routes/productDetailRoutes");
 const courierRoutes = require("./routes/courierRoutes");
 const categoryRoutes = require("./routes/categoryRoutes");
 const productSizeRoutes = require("./routes/productSizeRoutes");
+const orderRoutes = require("./routes/orderRoutes");
 
 const app = express();
 const PORT = process.env.PORT;
@@ -28,7 +29,8 @@ app.get("/", (req, res) => {
 app.use("/api", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/user/addresses", addressRoutes);
-app.use("/api/user/orders", orderRoutes);
+app.use("/api/user/orders", userOrderRoutes);
+app.use("/api/orders", orderRoutes);
 app.use("/api/banners", bannerRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/payment-methods", paymentMethodRoutes);
