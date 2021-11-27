@@ -19,6 +19,7 @@ import Category from "./pages/Admin/Category";
 import ProductSize from "./pages/Admin/ProductSize";
 import Products from "./pages/Admin/Products";
 import ProductDetail from "./pages/Admin/ProductDetail";
+import Banner from "./pages/Admin/Banner";
 
 const authRoutes = [
   {
@@ -56,6 +57,7 @@ const Routes = () => {
     <Container>
       <Switch>
         <Route exact path="/admin" component={Dashboard} />
+        <Route exact path="/admin/banners" component={Banner} />
         <Route exact path="/admin/categories" component={Category} />
         <Route
           exact

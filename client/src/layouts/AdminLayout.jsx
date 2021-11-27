@@ -21,12 +21,12 @@ const AdminLayout = ({ children }) => {
                 </Link>
               </li>
               <li className="mb-4">
-                <Link to="/admin" className="font-medium">
+                <Link to="/admin/orders" className="font-medium">
                   Orders
                 </Link>
               </li>
               <li className="mb-8">
-                <Link to="/admin" className="font-medium">
+                <Link to="/admin/banners" className="font-medium">
                   Banners
                 </Link>
               </li>
