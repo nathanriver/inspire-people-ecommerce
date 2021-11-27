@@ -12,6 +12,8 @@ const provinceRoutes = require("./routes/provinceRoutes");
 const cityRoutes = require("./routes/cityRoutes");
 const productDetailRoutes = require("./routes/productDetailRoutes");
 const courierRoutes = require("./routes/courierRoutes");
+const categoryRoutes = require("./routes/categoryRoutes");
+const productSizeRoutes = require("./routes/productSizeRoutes");
 
 const app = express();
 const PORT = process.env.PORT;
@@ -34,6 +36,8 @@ app.use("/api/provinces", provinceRoutes);
 app.use("/api/cities", cityRoutes);
 app.use("/api/product-details", productDetailRoutes);
 app.use("/api/couriers", courierRoutes);
+app.use("/api/categories", categoryRoutes);
+app.use("/api/product-sizes", productSizeRoutes);
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);

@@ -5,5 +5,9 @@ export const API = axios.create({
 });
 
 export const setToken = (token) => {
-  API.defaults.headers.common["x-auth-token"] = token ?? "";
+  if (token) {
+    API.defaults.headers.common["x-auth-token"] = token;
+  } else {
+    delete API.defaults.headers.common["x-auth-token"];
+  }
 };

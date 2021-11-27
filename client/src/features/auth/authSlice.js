@@ -29,7 +29,7 @@ export const autoLogin = createAsyncThunk(
   "auth/autoLogin",
   async (_, { rejectWithValue }) => {
     try {
-      const token = localStorage.token ? JSON.parse(localStorage.token) : null;
+      const token = localStorage.token ?? null;
       setToken(token);
       const { data } = await API.post("/validate");
       return data;
@@ -63,8 +63,9 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
-      localStorage.removeItem("token");
       state.user = null;
+      localStorage.removeItem("token");
+      setToken(null);
     },
   },
   extraReducers: {
@@ -76,7 +77,7 @@ const authSlice = createSlice({
       state.isLoading = false;
       state.registerError = null;
       state.user = action.payload;
-      localStorage.setItem("token", JSON.stringify(action.payload.token));
+      localStorage.setItem("token", action.payload.token);
       setToken(action.payload.token);
     },
     [register.rejected]: (state, action) => {
@@ -92,7 +93,7 @@ const authSlice = createSlice({
       state.isLoading = false;
       state.loginError = null;
       state.user = action.payload;
-      localStorage.setItem("token", JSON.stringify(action.payload.token));
+      localStorage.setItem("token", action.payload.token);
       setToken(action.payload.token);
     },
     [login.rejected]: (state, action) => {

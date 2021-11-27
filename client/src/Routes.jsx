@@ -14,6 +14,11 @@ import Account from "./pages/Account";
 import MyAddress from "./pages/MyAddress";
 import MyOrder from "./pages/MyOrder";
 import OrderDetail from "./pages/OrderDetail";
+import Dashboard from "./pages/Admin/Dashboard";
+import Category from "./pages/Admin/Category";
+import ProductSize from "./pages/Admin/ProductSize";
+import Products from "./pages/Admin/Products";
+import ProductDetail from "./pages/Admin/ProductDetail";
 
 const authRoutes = [
   {
@@ -50,7 +55,25 @@ const Routes = () => {
   return (
     <Container>
       <Switch>
-        <Route exact path="/" component={Home} />\
+        <Route exact path="/admin" component={Dashboard} />
+        <Route exact path="/admin/categories" component={Category} />
+        <Route
+          exact
+          path="/admin/categories/:categoryId/sizes"
+          component={ProductSize}
+        />
+        <Route
+          exact
+          path="/admin/categories/:categoryId/products"
+          component={Products}
+        />
+        <Route
+          exact
+          path="/admin/categories/:categoryId/products/:productId/stock"
+          component={ProductDetail}
+        />
+
+        <Route exact path="/" component={Home} />
         <Route exact path="/products/:slug" component={Product} />
         <Route exact path="/cart" component={Cart} />
         <Route exact path="/checkout">

@@ -7,6 +7,11 @@ import NavBar from "./components/NavBar";
 import SideBar from "./components/SideBar";
 import Footer from "./components/Footer";
 import Snackbar from "./components/Snackbar";
+import { setToken } from "./config";
+
+if (localStorage.token) {
+  setToken(localStorage.token);
+}
 
 const App = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,6 +20,10 @@ const App = () => {
   const toggle = () => {
     setIsOpen(!isOpen);
   };
+
+  useEffect(() => {
+    dispatch(autoLogin());
+  }, [dispatch]);
 
   useEffect(() => {
     const hideMenu = () => {
@@ -29,10 +38,6 @@ const App = () => {
       window.removeEventListener("resize", hideMenu);
     };
   });
-
-  useEffect(() => {
-    dispatch(autoLogin());
-  }, [dispatch]);
 
   return (
     <Router>
