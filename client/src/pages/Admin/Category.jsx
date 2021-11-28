@@ -1,6 +1,10 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { API } from "../../config";
+import {
+  getCategories,
+  deleteCategory,
+} from "../../features/categories/categoriesSlice";
 import AdminLayout from "../../layouts/AdminLayout";
 import Loader from "../../components/Loader";
 import Table from "../../components/Table/Table";
@@ -10,21 +14,28 @@ import TableRow from "../../components/Table/TableRow";
 import TableCell from "../../components/Table/TableCell";
 import CategoryForm from "../../components/CategoryForm";
 import FormModal from "../../components/FormModal";
+import Error from "../../components/Error";
+import ConfirmationModal from "../../components/ConfirmationModal";
 
 const Category = () => {
-  const [categories, setCategories] = useState(null);
+  const dispatch = useDispatch();
+  const { categories, isLoading, error } = useSelector(
+    (state) => state.categories
+  );
+
+  const handleDeleteCategory = (id) => {
+    dispatch(deleteCategory(id));
+  };
 
   useEffect(() => {
-    const getCategories = async () => {
-      const { data } = await API.get("/categories");
-      setCategories(data);
-    };
-    getCategories();
-  }, []);
+    dispatch(getCategories());
+  }, [dispatch]);
 
   return (
     <AdminLayout title="Categories">
-      {!categories ? (
+      {error ? (
+        <Error error={error} />
+      ) : isLoading ? (
         <Loader />
       ) : (
         <>
@@ -117,22 +128,31 @@ const Category = () => {
                       >
                         <CategoryForm isEditMode={true} category={category} />
                       </FormModal>
-                      <button className="btn-outline py-1 px-3">
-                        <svg
-                          className="w-4 h-4"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                          />
-                        </svg>
-                      </button>
+                      <ConfirmationModal
+                        title="Confirm Delete Category"
+                        triggerBtn={{
+                          type: "icon",
+                          icon: (
+                            <svg
+                              className="w-4 h-4"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                              />
+                            </svg>
+                          ),
+                        }}
+                        contentText="Are you sure want to delete the category?"
+                        actionBtnText="Delete"
+                        action={() => handleDeleteCategory(category.id)}
+                      />
                     </div>
                   </TableCell>
                 </TableRow>

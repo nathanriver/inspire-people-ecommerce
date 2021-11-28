@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import { API } from "../config";
-import { addAddress, updateAddress } from "../features/address/addressSlice";
+import {
+  addCategory,
+  updateCategory,
+} from "../features/categories/categoriesSlice";
 import TextField from "./TextField";
-import Select from "./Select";
 import Loader from "./Loader";
 
 const categorySchema = Yup.object({
@@ -14,14 +14,26 @@ const categorySchema = Yup.object({
     .required("Label is required."),
 });
 
-const CategoryForm = ({ isEditMode, category }) => {
+const CategoryForm = ({ isEditMode, closeModal, category }) => {
+  const dispatch = useDispatch();
   const initialValues = {
     name: isEditMode ? category.name : "",
   };
 
-  const handleAddCategory = () => {};
+  const handleAddCategory = (values) => {
+    dispatch(addCategory(values));
+    closeModal();
+  };
 
-  const handleUpdateCategory = () => {};
+  const handleUpdateCategory = (values) => {
+    dispatch(
+      updateCategory({
+        id: category.id,
+        values,
+      })
+    );
+    closeModal();
+  };
 
   return (
     <>

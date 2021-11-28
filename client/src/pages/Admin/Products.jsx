@@ -20,7 +20,7 @@ const Products = () => {
       setProducts(data);
     };
     getProducts();
-  }, []);
+  }, [categoryId]);
 
   return (
     <AdminLayout>

@@ -21,7 +21,7 @@ const ProductDetail = () => {
       setProductDetails(data);
     };
     getProductDetails();
-  }, []);
+  }, [productId]);
 
   return (
     <AdminLayout>

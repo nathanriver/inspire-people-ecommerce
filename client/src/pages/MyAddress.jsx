@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserAddresses } from "../features/address/addressSlice";
 import AccountLayout from "../layouts/AccountLayout";

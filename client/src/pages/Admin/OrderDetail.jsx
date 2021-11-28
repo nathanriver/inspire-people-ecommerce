@@ -4,11 +4,6 @@ import { API } from "../../config";
 import AdminLayout from "../../layouts/AdminLayout";
 import OrderItem from "../../components/OrderItem";
 import Loader from "../../components/Loader";
-import Table from "../../components/Table/Table";
-import TableHead from "../../components/Table/TableHead";
-import TableBody from "../../components/Table/TableBody";
-import TableRow from "../../components/Table/TableRow";
-import TableCell from "../../components/Table/TableCell";
 import parseDate from "../../utils/parseDate";
 import currencyFormat from "../../utils/currencyFormat";
 
@@ -22,7 +17,7 @@ const OrderDetail = () => {
       setOrder(data);
     };
     getOrder();
-  }, []);
+  }, [orderId]);
 
   return (
     <AdminLayout>

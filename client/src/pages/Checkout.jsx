@@ -109,8 +109,8 @@ const Checkout = () => {
 
   useEffect(() => {
     const getCouriers = async (weightData) => {
-      // const { data } = await API.post("/couriers", weightData);
-      // setCouriers(data);
+      const { data } = await API.post("/couriers", weightData);
+      setCouriers(data);
     };
 
     if (address && totalWeight > 0) {
