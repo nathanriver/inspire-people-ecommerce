@@ -2,15 +2,14 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserAddresses } from "../features/address/addressSlice";
 import AccountLayout from "../layouts/AccountLayout";
-import AddAddressForm from "../components/AddressForm";
+import AddressForm from "../components/AddressForm";
 import Address from "../components/Address";
 import Loader from "../components/Loader";
 import Error from "../components/Error";
-import Modal from "../components/Modal";
+import FormModal from "../components/FormModal";
 
 const MyAddress = () => {
   const dispatch = useDispatch();
-  const [showAddAddressModal, setShowAddAddressModal] = useState(false);
   const {
     address: { addresses, isLoading, error },
   } = useSelector((state) => state);
@@ -19,30 +18,18 @@ const MyAddress = () => {
     dispatch(getUserAddresses());
   }, [dispatch]);
 
-  const handleAddressModalOpen = () => {
-    setShowAddAddressModal(true);
-  };
-
-  const handleAddressModalClose = () => {
-    setShowAddAddressModal(false);
-  };
-
   return (
     <AccountLayout title="Address List">
-      <Modal
-        title="Add Address"
-        isOpen={showAddAddressModal}
-        closeModal={handleAddressModalClose}
-      >
-        <AddAddressForm
-          isEditMode={false}
-          closeModal={handleAddressModalClose}
-        />
-      </Modal>
       <div className="flex justify-end">
-        <button className="btn" onClick={handleAddressModalOpen}>
-          Add Address
-        </button>
+        <FormModal
+          triggerBtn={{
+            type: "normal",
+            text: "Add Addres",
+          }}
+          title="Add Address"
+        >
+          <AddressForm isEditMode={false} />
+        </FormModal>
       </div>
       {isLoading ? (
         <Loader />

@@ -8,6 +8,8 @@ import TableHead from "../../components/Table/TableHead";
 import TableBody from "../../components/Table/TableBody";
 import TableRow from "../../components/Table/TableRow";
 import TableCell from "../../components/Table/TableCell";
+import CategoryForm from "../../components/CategoryForm";
+import FormModal from "../../components/FormModal";
 
 const Category = () => {
   const [categories, setCategories] = useState(null);
@@ -27,8 +29,16 @@ const Category = () => {
       ) : (
         <>
           <p className="font-bold mb-4">Categories</p>
-          <div className="flex justify-end">
-            <button className="btn mb-3">Add Category</button>
+          <div className="flex justify-end mb-3">
+            <FormModal
+              triggerBtn={{
+                type: "normal",
+                text: "Add Category",
+              }}
+              title="Add Category"
+            >
+              <CategoryForm isEditMode={false} />
+            </FormModal>
           </div>
           <Table>
             <TableHead>
@@ -83,22 +93,30 @@ const Category = () => {
                           />
                         </svg>
                       </Link>
-                      <button className="btn-outline py-1 px-3">
-                        <svg
-                          className="w-4 h-4"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-                          />
-                        </svg>
-                      </button>
+                      <FormModal
+                        triggerBtn={{
+                          type: "icon",
+                          icon: (
+                            <svg
+                              className="w-4 h-4"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                              />
+                            </svg>
+                          ),
+                        }}
+                        title="Update Category"
+                      >
+                        <CategoryForm isEditMode={true} category={category} />
+                      </FormModal>
                       <button className="btn-outline py-1 px-3">
                         <svg
                           className="w-4 h-4"

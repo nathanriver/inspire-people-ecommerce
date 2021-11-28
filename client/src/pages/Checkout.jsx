@@ -11,7 +11,7 @@ import Address from "../components/Address";
 import CheckoutItem from "../components/CheckoutItem";
 import Loader from "../components/Loader";
 import Error from "../components/Error";
-import Modal from "../components/Modal";
+import FormModal from "../components/FormModal";
 
 const Checkout = () => {
   const dispatch = useDispatch();
@@ -21,8 +21,6 @@ const Checkout = () => {
   const [paymentMethods, setPaymentMethods] = useState([]);
   const [paymentMethod, setPaymentMethod] = useState("");
   const [shippingFee, setShippingFee] = useState(0);
-  const [showAddressModal, setShowAddressModal] = useState(false);
-  const [showAddressListModal, setShowAddressListModal] = useState(false);
   const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
   const [error, setError] = useState(false);
   const {
@@ -34,20 +32,6 @@ const Checkout = () => {
   const totalWeight = cartItems.reduce((a, b) => a + b.weight * b.quantity, 0);
   const subTotal = cartItems.reduce((a, b) => a + b.price * b.quantity, 0);
   const total = subTotal + shippingFee;
-
-  const handleAddressModalOpen = () => {
-    setShowAddressModal(true);
-  };
-  const handleAddressModalClose = () => {
-    setShowAddressModal(false);
-  };
-
-  const handleAddressListModalOpen = () => {
-    setShowAddressListModal(true);
-  };
-  const handleAddressListModalClose = () => {
-    setShowAddressListModal(false);
-  };
 
   const handleCourierChange = (e) => {
     setCourier(e.target.value);
@@ -125,8 +109,8 @@ const Checkout = () => {
 
   useEffect(() => {
     const getCouriers = async (weightData) => {
-      const { data } = await API.post("/couriers", weightData);
-      setCouriers(data);
+      // const { data } = await API.post("/couriers", weightData);
+      // setCouriers(data);
     };
 
     if (address && totalWeight > 0) {
@@ -148,45 +132,40 @@ const Checkout = () => {
             <div className="flex justify-between mb-2">
               <p className="font-bold">Shipping Address</p>
               {address && (
-                <button className="btn" onClick={handleAddressListModalOpen}>
-                  Change
-                </button>
-              )}
-            </div>
-            {isLoading ? (
-              <Loader />
-            ) : !address ? (
-              <>
-                <Modal
-                  title="Add Address"
-                  isOpen={showAddressModal}
-                  closeModal={handleAddressModalClose}
-                >
-                  <AddressForm
-                    isEditMode={false}
-                    closeModal={handleAddressModalClose}
-                  />
-                </Modal>
-                <div className="space-y-3">
-                  <p>No shipping address yet.</p>
-                  <button className="btn" onClick={handleAddressModalOpen}>
-                    Add Address
-                  </button>
-                </div>
-              </>
-            ) : (
-              <>
-                <Modal
+                <FormModal
+                  triggerBtn={{
+                    type: "normal",
+                    text: "Change",
+                  }}
                   title="Change Address"
-                  isOpen={showAddressListModal}
-                  closeModal={handleAddressListModalClose}
                 >
                   <>
                     {addresses.map((address) => (
                       <Address key={address.uuid} address={address} />
                     ))}
                   </>
-                </Modal>
+                </FormModal>
+              )}
+            </div>
+            {isLoading ? (
+              <Loader />
+            ) : !address ? (
+              <>
+                <div className="space-y-3">
+                  <p>No shipping address yet.</p>
+                  <FormModal
+                    triggerBtn={{
+                      type: "normal",
+                      text: "Add Addres",
+                    }}
+                    title="Add Address"
+                  >
+                    <AddressForm isEditMode={false} />
+                  </FormModal>
+                </div>
+              </>
+            ) : (
+              <>
                 <p>{address.label}</p>
                 <p>
                   {address.recipient_name} | +62{address.phone_number}

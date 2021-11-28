@@ -1,13 +1,8 @@
-import { useState } from "react";
+import React from "react";
+import { useState, useEffect } from "react";
 import Modal from "./Modal";
 
-const ConfirmationModal = ({
-  title,
-  triggerBtn,
-  contentText,
-  actionBtnText,
-  action,
-}) => {
+const FormModal = ({ title, triggerBtn, children }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleModalClose = () => {
@@ -18,10 +13,9 @@ const ConfirmationModal = ({
     setModalOpen(true);
   };
 
-  const handleAction = () => {
-    action();
-    setModalOpen(false);
-  };
+  useEffect(() => {
+    return () => {};
+  }, []);
 
   const triggerButton = () => {
     if (triggerBtn.type === "icon") {
@@ -45,24 +39,20 @@ const ConfirmationModal = ({
     }
   };
 
+  const childrenWithProps = React.isValidElement(children)
+    ? React.cloneElement(children, {
+        closeModal: handleModalClose,
+      })
+    : children;
+
   return (
     <>
       {triggerButton()}
       <Modal isOpen={modalOpen} title={title} closeModal={handleModalClose}>
-        <div className="space-y-3">
-          <div>{contentText}</div>
-          <div className="flex justify-end space-x-3">
-            <button className="btn-secondary" onClick={handleModalClose}>
-              Cancel
-            </button>
-            <button className="btn" onClick={handleAction}>
-              {actionBtnText}
-            </button>
-          </div>
-        </div>
+        {childrenWithProps}
       </Modal>
     </>
   );
 };
 
-export default ConfirmationModal;
+export default FormModal;

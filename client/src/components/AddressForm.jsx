@@ -92,10 +92,6 @@ const AddressForm = ({ isEditMode, closeModal, address }) => {
     }
   }, [isEditMode, address]);
 
-  useEffect(() => {
-    return () => {};
-  }, []);
-
   return (
     <>
       {isEditMode && !cities ? (
