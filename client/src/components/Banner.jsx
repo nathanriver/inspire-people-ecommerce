@@ -11,7 +11,7 @@ const Banner = () => {
 
   useEffect(() => {
     const getBanners = async () => {
-      const { data } = await API.get("/banners?showMode=true");
+      const { data } = await API.get("/banners/active");
       setBanners(data);
     };
     getBanners();

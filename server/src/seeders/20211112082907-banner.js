@@ -7,12 +7,14 @@ module.exports = {
       [
         {
           image_url:
-            "https://res.cloudinary.com/nathanriver/image/upload/v1636701280/inspire_people/covers/cover-1_xgd09t.jpg",
+            "https://res.cloudinary.com/nathanriver/image/upload/v1638200537/inspire_people/banners/u9zb0nwlkg98kzjdbn81.jpg",
+          public_id: "inspire_people/banners/u9zb0nwlkg98kzjdbn81",
           is_active: true,
         },
         {
           image_url:
-            "https://res.cloudinary.com/nathanriver/image/upload/v1636701280/inspire_people/covers/cover-2_thbdtk.jpg",
+            "https://res.cloudinary.com/nathanriver/image/upload/v1638200553/inspire_people/banners/lbfo4amh2v8gwlhdiutm.jpg",
+          public_id: "inspire_people/banners/lbfo4amh2v8gwlhdiutm",
           is_active: true,
         },
       ],

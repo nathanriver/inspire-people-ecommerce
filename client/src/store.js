@@ -6,6 +6,7 @@ import authReducer from "./features/auth/authSlice";
 import addressReducer from "./features/address/addressSlice";
 import categoriesReducer from "./features/categories/categoriesSlice";
 import productSizesReducer from "./features/product-sizes/productSizesSlice";
+import bannersReducer from "./features/banners/bannersSlice";
 
 const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ const store = configureStore({
     address: addressReducer,
     categories: categoriesReducer,
     productSizes: productSizesReducer,
+    banners: bannersReducer,
   },
 });
 

@@ -12,6 +12,10 @@ module.exports = {
         type: DataTypes.STRING(300),
         allowNull: false,
       },
+      public_id: {
+        type: DataTypes.STRING(300),
+        allowNull: false,
+      },
       is_active: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
