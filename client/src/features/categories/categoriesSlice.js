@@ -15,9 +15,9 @@ export const getCategories = createAsyncThunk(
 
 export const addCategory = createAsyncThunk(
   "categories/addCategory",
-  async (categoryData, { rejectWithValue }) => {
+  async (values, { rejectWithValue }) => {
     try {
-      const { data } = await API.post(`/categories`, categoryData);
+      const { data } = await API.post(`/categories`, values);
       return data;
     } catch (error) {
       return rejectWithValue(error.response.data.message);
@@ -39,12 +39,9 @@ export const deleteCategory = createAsyncThunk(
 
 export const updateCategory = createAsyncThunk(
   "categories/updateCategory",
-  async (categoryData, { rejectWithValue }) => {
+  async ({ id, values }, { rejectWithValue }) => {
     try {
-      const { data } = await API.put(
-        `/categories/${categoryData.id}`,
-        categoryData.values
-      );
+      const { data } = await API.put(`/categories/${id}`, values);
       return data;
     } catch (error) {
       return rejectWithValue(error.response.data.message);

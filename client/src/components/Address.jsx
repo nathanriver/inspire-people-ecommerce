@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import { deleteAddress, updateAddress } from "../features/address/addressSlice";
 import FormModal from "./FormModal";
 import AddressForm from "./AddressForm";
-import ConfirmationModal2 from "./ConfirmationModal";
+import ConfirmationModal from "./ConfirmationModal";
 
 const Address = ({ address }) => {
   const dispatch = useDispatch();
@@ -66,7 +66,7 @@ const Address = ({ address }) => {
           </button>
         )}
         {!address.is_default && (
-          <ConfirmationModal2
+          <ConfirmationModal
             triggerBtn={{
               type: "text",
               text: "Delete",

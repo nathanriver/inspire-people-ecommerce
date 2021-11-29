@@ -68,7 +68,7 @@ const Category = () => {
                     <div className="flex items-center space-x-1">
                       <Link
                         className="btn-outline py-1 px-3"
-                        to={`categories/${category.id}/sizes`}
+                        to={`categories/${category.id}/product-sizes`}
                       >
                         <svg
                           className="w-4 h-4"

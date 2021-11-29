@@ -69,7 +69,7 @@ const Routes = () => {
         />
         <Route
           exact
-          path="/admin/categories/:categoryId/sizes"
+          path="/admin/categories/:categoryId/product-sizes"
           component={ProductSize}
         />
         <Route

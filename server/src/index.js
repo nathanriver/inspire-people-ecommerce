@@ -39,7 +39,7 @@ app.use("/api/cities", cityRoutes);
 app.use("/api/product-details", productDetailRoutes);
 app.use("/api/couriers", courierRoutes);
 app.use("/api/categories", categoryRoutes);
-app.use("/api/product-sizes", productSizeRoutes);
+app.use("/api/categories", productSizeRoutes);
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);

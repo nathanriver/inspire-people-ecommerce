@@ -5,6 +5,7 @@ import snackbarReducer from "./features/snackbar/snackbarSlice";
 import authReducer from "./features/auth/authSlice";
 import addressReducer from "./features/address/addressSlice";
 import categoriesReducer from "./features/categories/categoriesSlice";
+import productSizesReducer from "./features/product-sizes/productSizesSlice";
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     auth: authReducer,
     address: addressReducer,
     categories: categoriesReducer,
+    productSizes: productSizesReducer,
   },
 });
 
