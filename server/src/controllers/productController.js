@@ -1,32 +1,19 @@
 const { Op } = require("sequelize");
-const JWT = require("jsonwebtoken");
-const { Product, User } = require("../models");
+const { Product } = require("../models");
 
 exports.getProducts = async (req, res) => {
   try {
-    const token = req.header("x-auth-token");
-    const { category_id } = req.query;
-    const productWhere = {};
-    let productAttributes = {
-      exclude: ["id", "category_id", "sku", "weight", "summary", "created_at"],
-    };
-    if (category_id) {
-      productWhere.category_id = category_id;
-    }
-    if (token) {
-      const decodedToken = JWT.verify(token, process.env.JWT_SECRET);
-      const user = await User.findOne({
-        where: {
-          uuid: decodedToken.id,
-        },
-      });
-      if (user.role === "Admin") {
-        productAttributes = {};
-      }
-    }
     const data = await Product.findAll({
-      attributes: productAttributes,
-      where: productWhere,
+      attributes: {
+        exclude: [
+          "id",
+          "category_id",
+          "sku",
+          "weight",
+          "summary",
+          "created_at",
+        ],
+      },
     });
     return res.json(data);
   } catch (error) {
@@ -47,6 +34,7 @@ exports.getProductBySlug = async (req, res) => {
         exclude: ["id", "category_id", "weight", "created_at"],
       },
       include: {
+        required: false,
         association: "productDetails",
         where: {
           stock: {

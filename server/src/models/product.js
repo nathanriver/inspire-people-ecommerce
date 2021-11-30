@@ -53,6 +53,10 @@ module.exports = (sequelize, DataTypes) => {
       image_url: {
         type: DataTypes.STRING(255),
       },
+      public_id: {
+        type: DataTypes.STRING(300),
+        allowNull: false,
+      },
     },
     {
       sequelize,

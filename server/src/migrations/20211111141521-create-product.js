@@ -49,6 +49,10 @@ module.exports = {
         allowNull: false,
         type: DataTypes.DATE,
       },
+      public_id: {
+        type: DataTypes.STRING(300),
+        allowNull: false,
+      },
     });
   },
   down: async (queryInterface, DataTypes) => {
