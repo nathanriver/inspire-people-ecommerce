@@ -16,6 +16,7 @@ const categoryRoutes = require("./routes/categoryRoutes");
 const productSizeRoutes = require("./routes/productSizeRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const manageProductRoutes = require("./routes/manageProductRoutes");
+const manageProductDetailRoutes = require("./routes/manageProductDetailRoutes");
 
 const app = express();
 const PORT = process.env.PORT;
@@ -34,6 +35,7 @@ app.use("/api/user/orders", userOrderRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/banners", bannerRoutes);
 app.use("/api/products", productRoutes);
+app.use("/api/products", manageProductDetailRoutes);
 app.use("/api/payment-methods", paymentMethodRoutes);
 app.use("/api/provinces", provinceRoutes);
 app.use("/api/cities", cityRoutes);

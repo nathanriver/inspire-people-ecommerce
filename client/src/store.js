@@ -7,6 +7,7 @@ import categoriesReducer from "./features/categories/categoriesSlice";
 import productSizesReducer from "./features/product-sizes/productSizesSlice";
 import bannersReducer from "./features/banners/bannersSlice";
 import productsReducer from "./features/products/productsSlice";
+import productDetailsReducer from "./features/product-details/productDetailsSlice";
 
 const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ const store = configureStore({
     productSizes: productSizesReducer,
     banners: bannersReducer,
     products: productsReducer,
+    productDetails: productDetailsReducer,
   },
 });
 

@@ -28,22 +28,3 @@ exports.getProductDetail = async (req, res) => {
     });
   }
 };
-
-exports.getProductDetails = async (req, res) => {
-  try {
-    const { product_id } = req.query;
-    const data = await ProductDetail.findAll({
-      where: {
-        product_id,
-      },
-      include: {
-        association: "productSize",
-      },
-    });
-    return res.json(data);
-  } catch (error) {
-    return res.status(500).json({
-      message: "Error in getting product details",
-    });
-  }
-};

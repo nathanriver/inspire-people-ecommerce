@@ -120,7 +120,7 @@ const Product = () => {
               </option>
               {product.productDetails.map((p, i) => (
                 <option key={i} value={p.id}>
-                  {p.productSize.name}
+                  {p.productSize?.name || "No Size"}
                 </option>
               ))}
             </select>
