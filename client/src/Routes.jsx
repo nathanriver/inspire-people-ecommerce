@@ -4,6 +4,7 @@ import Container from "./components/Container";
 import Loader from "./components/Loader";
 import PrivateRoute from "./components/PrivateRoute";
 import AuthRoute from "./components/AuthRoute";
+import AdminRoute from "./components/AdminRoute";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -22,6 +23,41 @@ import ProductDetail from "./pages/Admin/ProductDetail";
 import Banner from "./pages/Admin/Banner";
 import Order from "./pages/Admin/Order";
 import AdminOrderDetail from "./pages/Admin/OrderDetail";
+
+const adminRoutes = [
+  {
+    path: "/admin",
+    component: Dashboard,
+  },
+  {
+    path: "/admin/banners",
+    component: Banner,
+  },
+  {
+    path: "/admin/categories",
+    component: Category,
+  },
+  {
+    path: "/admin/orders",
+    component: Order,
+  },
+  {
+    path: "/admin/orders/:orderId",
+    component: AdminOrderDetail,
+  },
+  {
+    path: "/admin/categories/:categoryId/product-sizes",
+    component: ProductSize,
+  },
+  {
+    path: "/admin/categories/:categoryId/products",
+    component: Products,
+  },
+  {
+    path: "/admin/categories/:categoryId/products/:productId/stock",
+    component: ProductDetail,
+  },
+];
 
 const authRoutes = [
   {
@@ -58,34 +94,18 @@ const Routes = () => {
   return (
     <Container>
       <Switch>
-        <Route exact path="/admin" component={Dashboard} />
-        <Route exact path="/admin/banners" component={Banner} />
-        <Route exact path="/admin/categories" component={Category} />
-        <Route exact path="/admin/orders" component={Order} />
-        <Route
-          exact
-          path="/admin/orders/:orderId"
-          component={AdminOrderDetail}
-        />
-        <Route
-          exact
-          path="/admin/categories/:categoryId/product-sizes"
-          component={ProductSize}
-        />
-        <Route
-          exact
-          path="/admin/categories/:categoryId/products"
-          component={Products}
-        />
-        <Route
-          exact
-          path="/admin/categories/:categoryId/products/:productId/stock"
-          component={ProductDetail}
-        />
-
         <Route exact path="/" component={Home} />
         <Route exact path="/products/:slug" component={Product} />
         <Route exact path="/cart" component={Cart} />
+        {adminRoutes.map(({ path, component }, i) => (
+          <AdminRoute
+            key={i}
+            exact
+            path={path}
+            component={component}
+            authState={authState}
+          />
+        ))}
         <Route exact path="/checkout">
           {authState.isLoading || cartState.isLoading ? (
             <Loader />

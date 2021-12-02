@@ -1,15 +1,24 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../features/auth/authSlice";
 import { Link } from "react-router-dom";
 
 const AccountLayout = ({ children, title }) => {
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+
   return (
     <>
       <div className="flex justify-between">
         <div className="hidden md:block w-1/5">
           <div className="card">
             <ul>
+              {user.isAdmin && (
+                <li className="mb-4">
+                  <Link to="/admin" className="font-medium">
+                    Admin Panel
+                  </Link>
+                </li>
+              )}
               <li className="mb-4">
                 <Link to="/account" className="font-bold">
                   My Account

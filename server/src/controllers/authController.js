@@ -5,13 +5,12 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 exports.validate = async (req, res) => {
   try {
-    const data = await User.findOne({
-      where: {
-        uuid: req.userId,
-      },
-      attributes: ["uuid", "name", "email"],
+    const user = req.user;
+    return res.json({
+      name: user.name,
+      email: user.email,
+      isAdmin: user.role === "Admin",
     });
-    return res.json(data);
   } catch (error) {
     return res.status(400).json({ message: "Internal server error." });
   }
@@ -44,7 +43,6 @@ exports.register = async (req, res) => {
       JWT_SECRET
     );
     return res.json({
-      id: newUser.uuid,
       name: newUser.name,
       email: newUser.email,
       isAdmin: false,
@@ -77,7 +75,6 @@ exports.login = async (req, res) => {
       JWT_SECRET
     );
     return res.json({
-      id: user.uuid,
       name: user.name,
       email: user.email,
       isAdmin: user.role === "Admin",
