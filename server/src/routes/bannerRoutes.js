@@ -6,13 +6,14 @@ const {
   getActiveBanners,
   toggleActiveBanner,
 } = require("../controllers/bannerController");
+const { auth, admin } = require("../middleware");
 
 const router = express.Router();
 
-router.get("/", getBanners);
-router.post("/", addBanner);
-router.delete("/:id", deleteBanner);
+router.get("/", auth, admin, getBanners);
+router.post("/", auth, admin, addBanner);
+router.delete("/:id", auth, admin, deleteBanner);
 router.get("/active", getActiveBanners);
-router.patch("/:id/active", toggleActiveBanner);
+router.patch("/:id/active", auth, admin, toggleActiveBanner);
 
 module.exports = router;

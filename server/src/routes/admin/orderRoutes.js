@@ -4,11 +4,11 @@ const {
   getOrder,
   updateOrder,
 } = require("../../controllers/admin/orderController");
-const { auth } = require("../../middleware");
+const { auth, admin } = require("../../middleware");
 
 const router = express.Router();
 
-router.get("/", auth, getOrders);
+router.get("/", auth, admin, getOrders);
 router.get("/:id", auth, getOrder);
 router.put("/:id", auth, updateOrder);
 
