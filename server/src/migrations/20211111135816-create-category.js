@@ -12,6 +12,10 @@ module.exports = {
         type: DataTypes.STRING(30),
         allowNull: false,
       },
+      is_one_size: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+      },
     });
   },
   down: async (queryInterface, DataTypes) => {

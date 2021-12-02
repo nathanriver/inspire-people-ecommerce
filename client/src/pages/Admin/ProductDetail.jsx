@@ -89,7 +89,7 @@ const ProductDetail = () => {
                 <TableRow key={productDetail.id}>
                   <TableCell>{i + 1}</TableCell>
                   <TableCell>
-                    {productDetail.productSize?.name || "No Size"}
+                    {productDetail.productSize?.name || "One Size"}
                   </TableCell>
                   <TableCell>{productDetail.stock}</TableCell>
                   <TableCell>

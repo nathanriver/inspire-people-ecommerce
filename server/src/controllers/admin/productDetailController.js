@@ -1,4 +1,4 @@
-const { ProductDetail } = require("../../models");
+const { ProductDetail, Product } = require("../../models");
 
 exports.getProductDetails = async (req, res) => {
   try {
@@ -23,6 +23,26 @@ exports.addProductDetail = async (req, res) => {
   try {
     const { productId: product_id } = req.params;
     const { productsize_id, stock } = req.body;
+    const product = await Product.findOne({
+      where: {
+        id: product_id,
+      },
+      include: [
+        {
+          required: false,
+          association: "category",
+        },
+        {
+          required: false,
+          association: "productDetails",
+        },
+      ],
+    });
+    if (product.category.is_one_size && product.productDetails.length >= 1) {
+      return res.status(400).json({
+        message: "This product category only can have one size.",
+      });
+    }
     const productDetail = await ProductDetail.create({
       product_id,
       productsize_id: productsize_id || null,

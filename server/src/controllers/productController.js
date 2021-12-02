@@ -33,20 +33,26 @@ exports.getProductBySlug = async (req, res) => {
       attributes: {
         exclude: ["id", "category_id", "weight", "created_at"],
       },
-      include: {
-        required: false,
-        association: "productDetails",
-        where: {
-          stock: {
-            [Op.gt]: 0,
+      include: [
+        {
+          required: false,
+          association: "productDetails",
+          where: {
+            stock: {
+              [Op.gt]: 0,
+            },
+          },
+          attributes: ["id", "stock"],
+          include: {
+            association: "productSize",
+            attributes: ["name"],
           },
         },
-        attributes: ["id", "stock"],
-        include: {
-          association: "productSize",
-          attributes: ["name"],
+        {
+          association: "category",
+          attributes: ["name", "is_one_size"],
         },
-      },
+      ],
     });
     return res.json(data);
   } catch (error) {

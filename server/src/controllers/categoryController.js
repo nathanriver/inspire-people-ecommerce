@@ -11,11 +11,28 @@ exports.getCategories = async (req, res) => {
   }
 };
 
+exports.getCategory = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const data = await Category.findOne({
+      where: {
+        id,
+      },
+    });
+    return res.json(data);
+  } catch (error) {
+    return res.status(500).json({
+      message: "Error in getting category.",
+    });
+  }
+};
+
 exports.addCategory = async (req, res) => {
   try {
-    const { name } = req.body;
+    const { name, is_one_size } = req.body;
     const data = await Category.create({
       name,
+      is_one_size,
     });
     return res.json(data);
   } catch (error) {
@@ -46,10 +63,11 @@ exports.deleteCategory = async (req, res) => {
 exports.updateCategory = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name } = req.body;
+    const { name, is_one_size } = req.body;
     await Category.update(
       {
         name,
+        is_one_size,
       },
       {
         where: {

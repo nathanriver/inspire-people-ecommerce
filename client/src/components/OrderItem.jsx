@@ -6,7 +6,7 @@ const OrderItem = ({
     quantity,
     productDetail: {
       product: { slug, name, price, image_url },
-      productSize: { name: size },
+      productSize,
     },
   },
 }) => {
@@ -16,7 +16,7 @@ const OrderItem = ({
         <img src={image_url} alt={name} className="w-20" />
         <div>
           <p className="text-sm font-bold">{name}</p>
-          <p className="text-sm">Size: {size}</p>
+          <p className="text-sm">Size: {productSize?.name || "One Size"}</p>
           <p className="text-sm">Quantity: {quantity}</p>
           <p className="text-sm font-semibold">
             {currencyFormat(price * quantity)}

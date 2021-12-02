@@ -7,6 +7,7 @@ module.exports = {
       [
         {
           name: "T-Shirt",
+          is_one_size: false,
         },
       ],
       {}
