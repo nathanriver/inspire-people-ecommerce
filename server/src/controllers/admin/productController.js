@@ -1,5 +1,5 @@
-const { Product } = require("../models");
-const { cloudinary } = require("../config/cloudinary");
+const { Product } = require("../../models");
+const { cloudinary } = require("../../config/cloudinary");
 
 exports.getProducts = async (req, res) => {
   try {
