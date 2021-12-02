@@ -61,3 +61,35 @@ exports.getOrder = async (req, res) => {
     });
   }
 };
+
+exports.updateOrder = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status, tracking_number } = req.body;
+    await Order.update(
+      {
+        status,
+        tracking_number,
+      },
+      {
+        where: {
+          id,
+        },
+      }
+    );
+    const data = await Order.findOne({
+      where: {
+        id,
+      },
+      include: {
+        association: "user",
+      },
+      order: [["created_at", "DESC"]],
+    });
+    return res.json(data);
+  } catch (error) {
+    return res.status(500).json({
+      message: "Error in updating order.",
+    });
+  }
+};
