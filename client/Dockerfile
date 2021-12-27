@@ -8,7 +8,7 @@ RUN npm install
 
 RUN chown -R node /usr/src/app/node_modules
 
-COPY . .
+COPY . ./
 
 USER node
 
