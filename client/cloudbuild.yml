@@ -5,8 +5,8 @@ steps:
         "build",
         "--target=base",
         "-t",
-        "gcr.io/nathanriver-test/inspire-client:dev",
+        "gcr.io/nathanriver-test/inspire-client:$SHORT_SHA",
         "client",
       ]
   - name: "gcr.io/cloud-builders/docker"
-    args: ["push", "gcr.io/nathanriver-test/inspire-client:dev"]
+    args: ["push", "gcr.io/nathanriver-test/inspire-client:$SHORT_SHA"]
