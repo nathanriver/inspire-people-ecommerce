@@ -1,0 +1,5 @@
+node_modules
+postgres-data-dev
+postgres-data-production
+dump.sql
+.env

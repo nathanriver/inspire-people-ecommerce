@@ -4,7 +4,8 @@ module.exports = {
     username: "postgres",
     password: "123456",
     database: "inspire_people_ecommerce",
-    host: "localhost",
+    host: "db",
+    // host: "localhost",
     dialect: "postgres",
     define: {
       createdAt: "created_at",
@@ -13,11 +14,17 @@ module.exports = {
     minifyAliases: true,
   },
   test: {
-    username: "root",
-    password: null,
-    database: "database_test",
-    host: "127.0.0.1",
-    dialect: "mysql",
+    username: "postgres",
+    password: "123456",
+    database: "inspire_people_ecommerce",
+    host: "db",
+    // host: "localhost",
+    dialect: "postgres",
+    define: {
+      createdAt: "created_at",
+      updatedAt: "updated_at",
+    },
+    minifyAliases: true,
   },
   production: {
     use_env_variable: "DATABASE_URL",

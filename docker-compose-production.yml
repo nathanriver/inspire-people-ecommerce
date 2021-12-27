@@ -1,0 +1,41 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:14
+    restart: 'no'
+    volumes:
+      - ./server/postgres-data-production:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    ports:
+      - 5432:5432
+    networks:
+      - pern-app
+  api:
+    image: inspire-api
+    volumes:
+      - ./server/src:/usr/src/app/src
+    env_file:
+      - ./server/.env
+    ports:
+      - 5000:5000
+    depends_on:
+      - 'db'
+    networks:
+      - pern-app
+  client:
+    image: inspire-client:production
+    volumes:
+      - ./client/nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - 8080:80
+    depends_on:
+      - 'api'
+    networks:
+      - pern-app
+networks:
+  pern-app:
+    driver: bridge

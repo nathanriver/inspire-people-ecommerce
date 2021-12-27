@@ -1,0 +1,5 @@
+node_modules
+build
+Makefile
+nginx.conf
+.env

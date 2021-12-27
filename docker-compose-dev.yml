@@ -1,0 +1,58 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:14
+    restart: 'no'
+    volumes:
+      - ./server/postgres-data-dev:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    environment:
+      - POSTGRES_user=postgres
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=inspire_people_ecommerce
+    ports:
+      - 5432:5432
+    networks:
+      - pern-app
+  migrate-db:
+    image: inspire-api
+    volumes:
+      - ./server/src:/usr/src/app/src
+    command: 'npm run migrate-fresh-seed'
+    env_file:
+      - ./server/.env
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - pern-app
+  api:
+    image: inspire-api
+    volumes:
+      - ./server/src:/usr/src/app/src
+    env_file:
+      - ./server/.env
+    ports:
+      - 5000:5000
+    depends_on:
+      - 'db'
+    networks:
+      - pern-app
+  client:
+    image: inspire-client:dev
+    volumes:
+      - ./client/src:/usr/src/app/src
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    ports:
+      - 3000:3000
+    networks:
+      - pern-app
+networks:
+  pern-app:
+    driver: bridge

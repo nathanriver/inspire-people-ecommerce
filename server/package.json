@@ -22,11 +22,14 @@
     "xendit-node": "^1.19.0"
   },
   "devDependencies": {
+    "jest": "^27.4.5",
     "nodemon": "^2.0.15",
-    "sequelize-cli": "^6.3.0"
+    "sequelize-cli": "^6.3.0",
+    "supertest": "^6.1.6"
   },
   "scripts": {
-    "start": "nodemon src/index",
+    "test": "jest",
+    "start": "nodemon --legacy-watch src/index",
     "heroku-postbuild": "npm run migrate-fresh-seed",
     "migrate": "sequelize db:migrate",
     "migrate-fresh": "sequelize db:migrate:undo:all && sequelize db:migrate",
