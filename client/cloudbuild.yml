@@ -1,0 +1,12 @@
+steps:
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "build",
+        "--target=base",
+        "-t",
+        "gcr.io/nathanriver-test/inspire-client:$SHORT_SHA",
+        ".",
+      ]
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["push", "gcr.io/nathanriver-test/inspire-client:$SHORT_SHA"]
