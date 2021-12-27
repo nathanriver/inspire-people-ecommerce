@@ -3,7 +3,7 @@ steps:
     args:
       [
         "build",
-        "--target=base",
+        "--target=production",
         "-t",
         "gcr.io/nathanriver-test/inspire-client:$SHORT_SHA",
         "client",
